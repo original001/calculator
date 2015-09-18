@@ -9,13 +9,6 @@ module.exports = function(grunt) {
 			path: path
 		},
 		pkg: grunt.file.readJSON('package.json'),
-		uglify: {
-			build: {
-				files: {
-					// 'public/js/vendor/selectivizr.min.js':['public/js/vendor/selectivizr.js']
-				}
-			}
-		},
 		less: {
 			options: {
 				sourceMap: true,
@@ -117,24 +110,12 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
-		coffee: {
-			options: {
-				bare: true
-			},
-			scripts: {
-				expand: true,
-				cwd: srcRoot + path + 'js/',
-				src: ['*.coffee'],
-				dest: destRoot + path + 'js/',
-				ext: '.js'
-			}
-		},
 		copy: {
 			front: {
 				files: [{
 					expand: true,
 					cwd: srcRoot + path,
-					src: ['**/*.min.js', 'css/*.htc', '!**/_*', 'css/*.css','fonts/webfonts/*.woff','fonts/webfonts/*.eot', '!fonts/webfonts/*.css', 'js/*.js', '!plugins/**/*'],
+					src: ['**/*.min.js', 'css/*.htc', '!**/_*', 'css/*.css','fonts/webfonts/*.woff','fonts/webfonts/*.eot', '!fonts/webfonts/*.css', '!plugins/**/*'],
 					dest: destRoot + path
 				}]
 			},
@@ -178,6 +159,19 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		babel: {
+			options: {
+				sourceMap: true
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: srcRoot + path + 'js/',
+					src: '*.js',
+					dest: destRoot + path + 'js/'
+				}]
+			}
+		},
 		// ===================================
 		// WATCH OPTIONS
 		// ===================================
@@ -185,6 +179,10 @@ module.exports = function(grunt) {
 			options: {
 				livereload: true,
 				nospawn: true
+			},
+			babel: {
+				files: [srcRoot + path + 'js/*.js'],
+				tasks: ['newer:babel']
 			},
 			main: {
 				files: [srcRoot + path + 'css/main.less',srcRoot + path + '_less/*.less'],
@@ -263,12 +261,10 @@ module.exports = function(grunt) {
 		},
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -278,7 +274,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-newer');
 	grunt.loadNpmTasks('grunt-prettify');
 	grunt.loadNpmTasks('grunt-spritesmith');
+	grunt.loadNpmTasks('grunt-babel');
 
 	grunt.registerTask('default', ['connect','watch']);
-	grunt.registerTask('build', ['clean', 'coffee', 'uglify', 'copy', 'less', 'autoprefixer', 'cssmin', 'jade', 'prettify']);
+	grunt.registerTask('build', ['clean', 'babel', 'copy', 'less', 'autoprefixer', 'cssmin', 'jade', 'prettify']);
 };
