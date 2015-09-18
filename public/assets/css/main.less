@@ -1,0 +1,48 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+@import url('../_less/base.less');
+@import url('../_less/fonts.less');
+
+@footer-height: 100px;
+@content-width: 960px;
+html, body {
+	height: 100%;
+}
+body {
+	font:16px 'Roboto',Arial, sans-serif;
+	position: relative;
+	line-height: 1.42;
+	-webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+}
+p {
+	margin-bottom: 20px;
+}
+a {
+
+}
+.page {
+	min-height: 100%;
+	margin-bottom: -@footer-height;
+}
+header, .section, footer {
+	position: relative;
+	min-width: @content-width;
+}
+footer, .footer-shiv {
+	clear: both;
+	height: @footer-height + 10px;
+}
+.main {
+	position: relative;
+	width: @content-width;
+	margin: 0 auto;
+	.clearfix;
+}
+.content {
+	.clearfix;
+}
+
+//==================================
+@import url('../_less/helper.less');
