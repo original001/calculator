@@ -5,7 +5,7 @@ class Matrix {
         this._width = width || 0
         this._height = height || 0
         this._array = null
-        this.$table = $('<div class="table" />')
+        this.$wrapper = $('<div class="wrapper-table" />')
         this._isValid = true
     }
     _attachEvents(){}
@@ -24,7 +24,7 @@ class Matrix {
         return this._array
     }
     getHtml(){
-        return this.$table
+        return this.$wrapper
     }
     readFromTable(){
         var array = []
@@ -39,6 +39,9 @@ class Matrix {
         return array
     }
     create(){
+        var $bracketRight = $('<div class="table__brackets-r" />')
+        var $bracketLeft = $('<div class="table__brackets-l" />')
+        this.$table = $('<div class="table" />')
         for (var i = 0; i < this._height; i++) {
             let $row = $('<div class="table__row" />')
             for (var j = 0; j < this._width; j++) {
@@ -47,8 +50,9 @@ class Matrix {
                 $cell.append($input)
                 $row.append($cell)
             };
-            this.$table.append($row)
+            this.$table.append($row).appendTo(this.$wrapper)
         };
+        this.$wrapper.append($bracketRight).prepend($bracketLeft)
         this.$rows = this.$table.find('.table__row')
         this.$inputs = this.$table.find('.table__cell-input')
         this._attachEvents()
@@ -185,8 +189,10 @@ class MatrixControl {
         this._disabled = false
     }
     _init(){
-        this._matrixes.forEach(matrix => {
-            matrix.create().getHtml().appendTo(this._$calcField)
+        this._matrixes.forEach((matrix,ind) => {
+            // if (ind !== 0) 
+            //todo: add operation
+            matrix.create().getHtml().prependTo(this._$calcField)
         })
     }
     _calc(){

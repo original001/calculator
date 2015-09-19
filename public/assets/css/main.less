@@ -102,7 +102,7 @@ a, .link {
     white-space: nowrap;
     cursor: pointer;
     transition: background .175s;
-    &:hover {
+    &:hover, &:focus {
         background-color: darken(@color-btn, 10%);
     }
     &.disabled {
@@ -241,12 +241,37 @@ a, .link {
         border-top: none;
     }
 }
-
+.proccess-field {
+    margin-bottom: 40px;
+}
+.wrapper-table {
+    position: relative;
+    padding: 14px;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+}
 .table {
   display: table;
   float: left;
   border-collapse: collapse;
   border-spacing: 0;
+  &__brackets-r,
+  &__brackets-l {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      border: 4px solid #585858;
+  }
+  &__brackets-l {
+      left: 0;
+      border-right: none;
+  }
+  &__brackets-r {
+      right: 0;
+      border-left: none;
+  }
   &__row {
     display: table-row;
   }
