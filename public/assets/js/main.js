@@ -1,8 +1,12 @@
+var MatrixActions = Reflux.createActions(['matrixError','matrixValid'])
+
 class Matrix {
     constructor(width, height){
         this._width = width || 0
         this._height = height || 0
         this._array = null
+        this.$table = $('<div class="table" />')
+        this._isValid = true
     }
     _attachEvents(){}
     getWidth(){return this._width }
@@ -19,6 +23,9 @@ class Matrix {
     getValue(){
         return this._array
     }
+    getHtml(){
+        return this.$table
+    }
     readFromTable(){
         var array = []
         this.$rows.each((ind, row)=>{
@@ -32,7 +39,6 @@ class Matrix {
         return array
     }
     create(){
-        let $table = $('<div class="table" />')
         for (var i = 0; i < this._height; i++) {
             let $row = $('<div class="table__row" />')
             for (var j = 0; j < this._width; j++) {
@@ -41,45 +47,50 @@ class Matrix {
                 $cell.append($input)
                 $row.append($cell)
             };
-            $table.append($row)
+            this.$table.append($row)
         };
-        this.$table = $table
-        this.$rows = $table.find('.table__row')
-        this.$inputs = $table.find('.table__cell-input')
+        this.$rows = this.$table.find('.table__row')
+        this.$inputs = this.$table.find('.table__cell-input')
         this._attachEvents()
-        return $table
+        return this
     }
-   
+
 }
 
-class FillableMatrix extends Matrix {
+class InputMatrix extends Matrix {
     _attachEvents(){
-        this.$inputs.on('keyup',(evt)=>{
-            this.validate($(evt.target))
+        var _this = this
+        this.$inputs.on('keyup',function(){
+            _this._validate($(this))
         })
     }
-    showError($element){
+    _showError($element){
         $element.css('border','1px solid red')
+        this._isValid = false
+        MatrixActions.matrixError()
     }
-    validate($element){
+    _clearError($element){
+        $element.css('border','none')
+    }
+    _validate($element){
         if (isNaN($element.val())) {
-            this.showError($element)
-        };
+            this._showError($element)
+        } else {
+            this._clearError($element)
+            MatrixActions.matrixValid()
+        }
     }
 }
 
-class NotFillableMatrix extends Matrix {
-    constructor(array){
-        super()
-        console.log(array)
-        this.fill(array)
+class OutputMatrix extends Matrix {
+    writeToTable(array){
+        this.$rows.each((indRow, row)=>{
+            $(row).find(this.$inputs).each((indInput, input)=>{
+                $(input).val(array[indRow][indInput])
+            })
+        })
+        return this
     }
-    fill(array){
-        this.setWidth(4)
-        this.setHeight(4)
-        console.log(array)
-    }
-    
 }
 
 var Operational = {
@@ -92,8 +103,7 @@ var Operational = {
                 for (var i = 0; i < matrix.length; i++) {
                     newArray[i] = []
                     for (var j = 0; j < matrix[i].length; j++) {
-                        //todo: string to int
-                        newArray[i][j] = matrix[i][j] + lastMatrix[i][j]
+                        newArray[i][j] = +matrix[i][j] + +lastMatrix[i][j]
                     };
                 };
             };
@@ -131,18 +141,52 @@ class MatrixControl {
         this._$calcField = $('#calcField')
         this._$resultField = $('#resultField')
         this._$button = $('#getResult')
+        this._disabled = false
 
         this._init()
+        this._createStore()
         this._attachEvents()
+    }
+    _createStore(){
+        var _this = this
+        Reflux.createStore({
+            listenables:MatrixActions,
+            onMatrixError(){
+                _this._disable()
+            },
+            onMatrixValid(){
+                _this._checkTables()
+            }
+        })        
+    }
+    _checkTables(){
+        let isValid = true
+        this._matrixes.forEach(matrix=>{
+            if (isNaN(matrix.$inputs.val())) {
+                isValid = false
+                return false
+            }
+        })
+        if (isValid) {
+            this._enable()
+        }
     }
     _attachEvents(){
         this._$button.on('click', (evt)=>{
-            this._calc()
+            if (!this._disabled) this._calc()
         })
+    }
+    _disable(){
+        this._$button.addClass('disabled')
+        this._disabled = true
+    }
+    _enable(){
+        this._$button.removeClass('disabled')
+        this._disabled = false
     }
     _init(){
         this._matrixes.forEach(matrix => {
-            matrix.create().appendTo(this._$calcField)
+            matrix.create().getHtml().appendTo(this._$calcField)
         })
     }
     _calc(){
@@ -151,11 +195,16 @@ class MatrixControl {
         })
         let operator = new Operator(this._operator).getValue()
         let array = Operational[operator](matrixesAsArray)
-        new NotFillableMatrix(array).create().appendTo(this._$resultField)
+        let height = array.length
+        let width = array[0].length
+        new OutputMatrix(width, height)
+            .create()
+            .writeToTable(array)
+            .getHtml()
+            .appendTo(this._$resultField.empty())
     }
-    sum(){}
 }
-let m1 = new FillableMatrix(3, 2)
-let m2 = new FillableMatrix(3, 2)
+let m1 = new InputMatrix(3, 2)
+let m2 = new InputMatrix(3, 2)
 
 let MainPage = new MatrixControl([m1,m2],"+")
