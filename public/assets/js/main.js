@@ -166,16 +166,19 @@ class MatrixControl {
     _checkTables(){
         let isValid = true
         this._matrixes.forEach(matrix=>{
-            if (isNaN(matrix.$inputs.val())) {
-                isValid = false
-                return false
-            }
+            matrix.$inputs.each((ind, input)=>{
+                if (isNaN($(input).val())) {
+                    isValid = false
+                    return false
+                }
+            })
         })
         if (isValid) {
             this._enable()
         }
     }
     _attachEvents(){
+        //todo: enter key
         this._$button.on('click', (evt)=>{
             if (!this._disabled) this._calc()
         })
@@ -190,7 +193,6 @@ class MatrixControl {
     }
     _init(){
         this._matrixes.forEach((matrix,ind) => {
-            // if (ind !== 0) 
             //todo: add operation
             matrix.create().getHtml().prependTo(this._$calcField)
         })
@@ -212,5 +214,6 @@ class MatrixControl {
 }
 let m1 = new InputMatrix(3, 2)
 let m2 = new InputMatrix(3, 2)
+//todo: 3 and more matrixes
 
 let MainPage = new MatrixControl([m1,m2],"+")
