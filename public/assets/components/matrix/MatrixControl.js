@@ -1,20 +1,53 @@
 import Operational from './Operational'
 import Operator from './Operator'
 import MatrixActions from './MatrixActions'
+import InputMatrix from './InputMatrix'
 import OutputMatrix from './OutputMatrix'
 
+const DEFAULT_WIDTH = 4;
+const DEFAULT_HEIGHT = 4;
+const DEFAULT_OPERATOR = '+';
+
 class MatrixControl {
-    constructor(matrixes, operator){
-        this._operator = operator;
-        this._matrixes = matrixes || [];
+    constructor(){
+        this._operator = '+';
+        this._matrixes = [];
         this._$calcField = $('#calcField');
         this._$resultField = $('#resultField');
+        this._$addButtton = $('#addButton');
         this._$button = $('#getResult');
         this._disabled = false;
 
-        this._init();
         this._createStore();
         this._attachEvents();
+    }
+    init(){
+        this._addMatrix();
+    }
+    _attachEvents(){
+        //todo: enter key
+        this._$button.on('click', ()=>{
+            if (!this._disabled) this._calc()
+        });
+        this._$addButtton.on('click', ()=>{
+           this._addOperation()
+        })
+    }
+    _addOperation(){
+        this._addOperator();
+        this._addMatrix();
+    }
+    _addOperator(){
+        new Operator(DEFAULT_OPERATOR)
+            .create()
+            .getHtml()
+            .appendTo(this._$calcField);
+    }
+    _addMatrix(){
+        new InputMatrix(DEFAULT_WIDTH,DEFAULT_HEIGHT)
+            .create()
+            .getHtml()
+            .appendTo(this._$calcField)
     }
     _createStore(){
         var _this = this;
@@ -35,12 +68,6 @@ class MatrixControl {
             })
         }) && this._enable()
     }
-    _attachEvents(){
-        //todo: enter key
-        this._$button.on('click', ()=>{
-            if (!this._disabled) this._calc()
-        })
-    }
     _disable(){
         this._$button.addClass('disabled');
         this._disabled = true
@@ -49,12 +76,7 @@ class MatrixControl {
         this._$button.removeClass('disabled');
         this._disabled = false
     }
-    _init(){
-        this._matrixes.forEach((matrix) => {
-            //todo: add operation
-            matrix.create().getHtml().prependTo(this._$calcField)
-        })
-    }
+
     _calc(){
         let matrixesAsArray = this._matrixes.map(matrix => {
             return matrix.readFromTable()
@@ -71,4 +93,4 @@ class MatrixControl {
     }
 }
 
-export default MatrixControl
+export default new MatrixControl

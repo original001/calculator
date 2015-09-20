@@ -136,7 +136,7 @@ module.exports = function(grunt) {
 				nospawn: true
 			},
 			babel: {
-				files: [srcRoot + path + 'components/*.js'],
+				files: [srcRoot + path + 'components/**/*.js'],
 				tasks: ['newer:babel']
 			},
 			main: {
