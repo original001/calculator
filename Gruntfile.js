@@ -15,12 +15,12 @@ module.exports = function(grunt) {
 				outputSourceFiles: true,
 				sourceMapRootpath: srcRoot,
 				ieCompat: true,
-				expand: true,
+				expand: true
 			},
 			main: {
 				options: {
 					sourceMapFilename: destRoot + path + 'css/main.css.map',
-					sourceMapURL: 'main.css.map',
+					sourceMapURL: 'main.css.map'
 				},
 				files: {
 					'<%= meta.destRoot + meta.path %>css/main.css': '<%= meta.srcRoot + meta.path %>css/main.less'
@@ -29,19 +29,19 @@ module.exports = function(grunt) {
 			bootstrap: {
 				options: {
 					sourceMapFilename: destRoot + path + 'plugins/bootstrap/less/bootstrap.css.map',
-					sourceMapURL: 'bootstrap.css.map',
+					sourceMapURL: 'bootstrap.css.map'
 				},
 				files: {
-					'<%= meta.destRoot + meta.path %>plugins/bootstrap/less/bootstrap.css': '<%= meta.srcRoot + meta.path %>plugins/bootstrap/less/bootstrap.less',
+					'<%= meta.destRoot + meta.path %>plugins/bootstrap/less/bootstrap.css': '<%= meta.srcRoot + meta.path %>plugins/bootstrap/less/bootstrap.less'
 				}
 			},
 			fuelux: {
 				options: {
 					sourceMapFilename: destRoot + path + 'plugins/fuelux/less/fuelux.css.map',
-					sourceMapURL: 'fuelux.css.map',
+					sourceMapURL: 'fuelux.css.map'
 				},
 				files: {
-					'<%= meta.destRoot + meta.path %>plugins/fuelux/less/fuelux.css': '<%= meta.srcRoot + meta.path %>plugins/fuelux/less/fuelux.less',
+					'<%= meta.destRoot + meta.path %>plugins/fuelux/less/fuelux.css': '<%= meta.srcRoot + meta.path %>plugins/fuelux/less/fuelux.less'
 				}
 			}
 
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 					cwd: destRoot + path + 'plugins/',
 					src: [
 						'bootstrap/less/bootstrap.css',
-						'fuelux/less/fuelux.css',
+						'fuelux/less/fuelux.css'
 					],
 					dest: destRoot + path + 'plugins/',
 					ext: '.css'
@@ -97,78 +97,33 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
-		imagemin: {
-			dynamic: {
-				options: {
-					optimizationLevel: 7
-				},
-				files: [{
-					expand: true,
-					cwd: srcRoot + path + 'img/',
-					src: ['**/*.{png,jpg,gif,svg}'],
-					dest: destRoot + path + 'img/'
-				}]
-			}
-		},
 		copy: {
 			front: {
 				files: [{
 					expand: true,
 					cwd: srcRoot + path,
-					src: ['**/*.min.js', 'css/*.htc', '!**/_*', 'css/*.css','fonts/webfonts/*.woff','fonts/webfonts/*.eot', '!fonts/webfonts/*.css', '!plugins/**/*'],
-					dest: destRoot + path
-				}]
-			},
-			plugins: {
-				files: [{
-					expand: true,
-					cwd: srcRoot + path + 'plugins/',
 					src: [
-						'**/*.css',
 						'**/*.min.js',
-						'!jquery/**/*',
-						'!bootstrap/dist/**/*',
-						'!fuelux/dist/**/*',
-						'!**/_*',
-						// '**/*.gif',
-						// '**/*.eot',
-						// '**/*.woff',
-						// '**/*.woff2',
-						// '**/*.ttf',
-						// '**/*.svg',
-						//
-						// 'bootstrap/js/affix.js',
-						// 'bootstrap/js/alert.js',
-						// 'bootstrap/js/button.js',
-						// 'bootstrap/js/carousel.js',
-						// 'bootstrap/js/collapse.js',
-						// 'bootstrap/js/dropdown.js',
-						// 'bootstrap/js/modal.js',
-						// 'bootstrap/js/popover.js',
-						// 'bootstrap/js/scrollspy.js',
-						// 'bootstrap/js/tab.js',
-						// 'bootstrap/js/tooltip.js',
-						// 'bootstrap/js/transition.js',
-						// 'fuelux/js/radio.js',
-						// 'fuelux/js/checkbox.js',
-						// 'fuelux/js/selectlist.js',
-						// 'fuelux/js/datepicker.js',
-						// 'fuelux/js/infinite-scroll.js',
+						'css/*.htc',
+						'js/**/*.js',
+						'css/*.css',
+						'plugins/**/*'
 					],
-					dest: destRoot + path + 'plugins/'
+					dest: destRoot + path
 				}]
 			}
 		},
 		babel: {
 			options: {
-				sourceMap: true
+				sourceMap: true,
+				modules: 'amdStrict'
 			},
 			dist: {
 				files: [{
 					expand: true,
-					cwd: srcRoot + path + 'js/',
-					src: '*.js',
-					dest: destRoot + path + 'js/'
+					cwd: srcRoot + path + 'components/',
+					src: ['**/*.js'],
+					dest: destRoot + path + 'components/'
 				}]
 			}
 		},
@@ -181,7 +136,7 @@ module.exports = function(grunt) {
 				nospawn: true
 			},
 			babel: {
-				files: [srcRoot + path + 'js/*.js'],
+				files: [srcRoot + path + 'components/*.js'],
 				tasks: ['newer:babel']
 			},
 			main: {
@@ -258,7 +213,7 @@ module.exports = function(grunt) {
 				src: ['*.html'],
 				dest: destRoot
 			}
-		},
+		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
