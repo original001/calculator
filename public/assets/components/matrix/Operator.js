@@ -12,16 +12,16 @@ class Operator {
             '/':'divide'
         };
         if (operators[symbol] !== undefined) {
-            this._operator = operators[symbol]
+            this.functionName = operators[symbol]
         } else {
             throw new Error('Неизвестный оператор')
         }
     }
     getValue(){
-        return this._operator
+        return this.functionName
     }
     create(){
-        this._$wrapper.text(this._operator);
+        this._$wrapper.text(this.functionName);
         return this
     }
     getHtml(){

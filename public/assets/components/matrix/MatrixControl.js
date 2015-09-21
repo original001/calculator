@@ -1,4 +1,4 @@
-import Operational from './Operational'
+import Calculation from './Calculation'
 import Operator from './Operator'
 import MatrixActions from './MatrixActions'
 import InputMatrix from './InputMatrix'
@@ -10,13 +10,13 @@ const DEFAULT_OPERATOR = '+';
 
 class MatrixControl {
     constructor(){
-        this._operator = '+';
+        this._operators = [];
         this._matrixes = [];
         this._$calcField = $('#calcField');
         this._$resultField = $('#resultField');
         this._$addButtton = $('#addButton');
         this._$button = $('#getResult');
-        this._disabled = false;
+        this._disabled = true;
 
         this._createStore();
         this._attachEvents();
@@ -38,16 +38,28 @@ class MatrixControl {
         this._addMatrix();
     }
     _addOperator(){
-        new Operator(DEFAULT_OPERATOR)
+        var newOperator = new Operator(DEFAULT_OPERATOR);
+        newOperator
             .create()
             .getHtml()
             .appendTo(this._$calcField);
+
+        this._operators.push(newOperator);
     }
     _addMatrix(){
-        new InputMatrix(DEFAULT_WIDTH,DEFAULT_HEIGHT)
+        var newMatrix = new InputMatrix(DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        newMatrix
             .create()
             .getHtml()
-            .appendTo(this._$calcField)
+            .appendTo(this._$calcField);
+
+        this._matrixes.push(newMatrix);
+
+        if (this._matrixes.length <= 1){
+            this._disable()
+        } else {
+            this._enable()
+        }
     }
     _createStore(){
         var _this = this;
@@ -58,8 +70,20 @@ class MatrixControl {
             },
             onMatrixValid(){
                 _this._checkTables()
+            },
+            onShowResultMatrix(result){
+                _this._showResult(result)
             }
         })
+    }
+    _showResult(result){
+        let height = result.length;
+        let width = result[0].length;
+        new OutputMatrix(width, height)
+            .create()
+            .writeToTable(result)
+            .getHtml()
+            .appendTo(this._$resultField)
     }
     _checkTables(){
         _.every(this._matrixes, matrix=>{
@@ -78,18 +102,15 @@ class MatrixControl {
     }
 
     _calc(){
-        let matrixesAsArray = this._matrixes.map(matrix => {
-            return matrix.readFromTable()
+        var matrixesAsArray = [];
+        var operatorsAsArray = [];
+        this._matrixes.forEach((matrix)=>{
+            matrixesAsArray.push(matrix.readFromTable())
         });
-        let operator = new Operator(this._operator).getValue();
-        let array = Operational[operator](matrixesAsArray);
-        let height = array.length;
-        let width = array[0].length;
-        new OutputMatrix(width, height)
-            .create()
-            .writeToTable(array)
-            .getHtml()
-            .appendTo(this._$resultField.empty())
+        this._operators.forEach((operator)=>{
+            operatorsAsArray.push(operator.functionName)
+        });
+        new Calculation(matrixesAsArray, operatorsAsArray)
     }
 }
 

@@ -1,2 +1,6 @@
-var MatrixActions = Reflux.createActions(['matrixError','matrixValid']);
+var MatrixActions = Reflux.createActions([
+    'matrixError',
+    'matrixValid',
+    {"showResultMatrix":arguments}
+]);
 export default MatrixActions
