@@ -110,6 +110,7 @@ class MatrixControl {
         this._operators.forEach((operator)=>{
             operatorsAsArray.push(operator.functionName)
         });
+        this._$resultField.empty();
         new Calculation(matrixesAsArray, operatorsAsArray)
     }
 }

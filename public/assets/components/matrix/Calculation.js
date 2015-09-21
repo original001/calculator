@@ -7,6 +7,15 @@ class Calculation {
 
         this._reduce();
     }
+    _reduce(){
+    this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
+        let func = this._operators[ind-1];
+        let result = Calculation[func](firstMatrix, secondMatrix);
+        MatrixActions.showResultMatrix(result);
+        return result
+
+    })
+}
     static sum(firstMatrix, secondMatrix){
         var newArray = [];
         if (secondMatrix.length === firstMatrix.length
@@ -22,16 +31,17 @@ class Calculation {
         }
         return newArray
     }
-    _reduce(){
-        this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
-            let func = this._operators[ind-1];
-            let result = Calculation[func](firstMatrix, secondMatrix);
-            MatrixActions.showResultMatrix(result);
-            return result
 
-        })
+    static multiply(firstMatrix, secondMatrix){
+        return firstMatrix;
     }
-    static multiply(){}
+    static minus(firstMatrix, secondMatrix){
+        return firstMatrix;
+    }
+    static devide(firstMatrix, secondMatrix){
+        return firstMatrix;
+    }
+
 }
 
 export default Calculation

@@ -284,6 +284,7 @@ a, .link {
     height: 40px;
     width: 40px; 
     border: 1px solid @color-border;
+    &.error {border-bottom: 2px solid @color-error;}
     &-input {
       text-align: center;
       font-size: 18px;
@@ -294,6 +295,40 @@ a, .link {
       background: none;
     }
   }
+}
+
+.operator {
+    display: inline-block;
+    margin-top: 34px;
+    width: 34px;
+    padding: 5px 0;
+    margin-right: 20px;
+    &__symbol {
+        width: 34px;
+        height: 34px;
+        background: 50% 50% no-repeat;
+        &_sum {
+            background-image: url(../img/operator-plus.png); 
+            .svg & {background-image: url(../img/operator-plus.svg); }
+        }
+        &_devide {
+            background-image: url(../img/operator-devide.png); 
+            .svg & {background-image: url(../img/operator-devide.svg); }
+        }
+        &_minus {
+            background-image: url(../img/operator-minus.png); 
+            .svg & {background-image: url(../img/operator-minus.svg); }
+        }
+        &_multiply {
+            background-image: url(../img/operator-multi.png); 
+            .svg & {background-image: url(../img/operator-multi.svg); }
+        }
+    }
+    &__caret {
+        color: @color-btn;
+        font-size: 24px;
+        text-align: center;
+    }
 }
 
 //==================================

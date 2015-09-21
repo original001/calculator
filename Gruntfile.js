@@ -103,6 +103,7 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: srcRoot + path,
 					src: [
+						'img/**/*',
 						'**/*.min.js',
 						'css/*.htc',
 						'js/**/*.js',
@@ -165,7 +166,7 @@ module.exports = function(grunt) {
 			},
 			images: {
 				files: srcRoot + path + 'img/**/*.{png,jpg,gif,svg}',
-				tasks: ['newer:imagemin']
+				tasks: ['newer:copy']
 			},
 			livereload: {
 				files: [srcRoot + '**/*','!'+srcRoot+path+'**/*.less','!'+srcRoot+'*.jade'],

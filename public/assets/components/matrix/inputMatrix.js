@@ -9,11 +9,11 @@ class InputMatrix extends Matrix {
         })
     }
     _showError($element){
-        $element.css('border','1px solid red');
+        $element.parent().addClass('error');
         MatrixActions.matrixError()
     }
     _clearError($element){
-        $element.css('border','none')
+        $element.parent().removeClass('error');
     }
     _validate($element){
         if (isNaN($element.val())) {
