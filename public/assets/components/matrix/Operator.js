@@ -15,7 +15,8 @@ class Operator {
     }
     _showListOperators(){
         //todo:composite operations
-        new Select(this._$wrapper, this._$symbol, [Operator.getOperator('+'), Operator.getOperator('-'), Operator.getOperator('/'), Operator.getOperator('*')]);
+        new Select(this._$wrapper, this._$symbol,
+            [Operator.getOperator('+'), Operator.getOperator('-'), Operator.getOperator('/'), Operator.getOperator('*')]).create().show();
     }
     static getOperator(symbol){
         var operators = {

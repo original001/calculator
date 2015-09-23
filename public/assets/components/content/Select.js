@@ -1,5 +1,6 @@
 class Select {
     constructor($wrapper, $element, data){
+        this._$document = $('body');
         this._$wrapper = $wrapper;
         this._$bindItem = $element;
         this._$popupItem = $('<div class="select"></div>');
@@ -7,32 +8,49 @@ class Select {
         this._data = data;
 
         this._init();
-        this._attachEvents()
+    }
+    _init(){
+        this._fill();
+        this._excludeCurrent();
+    }
+    _attachEvents(){
+        //this._$document.on('click.select',()=>{
+        //   this.destroy();
+        //});
+
+        this._$popupItem.on('click',(evt)=>{
+            evt.stopPropagation()
+        })
+    }
+    _dettachEvents() {
+        this._$document.off('click');
+        this._$popupItem.off('click');
+    }
+    create() {
+        var top = this._$bindItem.position().top;
+        this._$popupItem.css('top',top);
+        this._$popupItem.appendTo(this._$wrapper);
+        this.show();
+        return this
     }
 
-    _attachEvents(){
-        //todo: select item
-        //todo: close onClick window
+    destroy() {
+        this.close();
+        this._$popupItem.remove();
+        this._dettachEvents()
+
     }
 
     show() {
-        this._$popupItem.show()
+        this._$popupItem
+            .show()
+            .addClass('show');
+        this._attachEvents()
+
     }
 
     close(){
         this._$popupItem.hide()
-    }
-
-    _init(){
-        this._setPosition();
-        this._fill();
-        this._create();
-        this._excludeCurrent();
-    }
-
-    _setPosition() {
-        var top = this._$bindItem.offset().top;
-        this._$popupItem.top(top);
     }
 
     _fill() {
@@ -40,7 +58,7 @@ class Select {
             var $item = $('<div class="select__item"></div>');
             $item.append(elem);
             this._$popupItem.append($item);
-        })
+        });
         this._$items = this._$popupItem.children('.select__item');
     }
 
@@ -48,10 +66,6 @@ class Select {
 
     }
 
-
-    _create() {
-        this._$popupItem.appendTo(this._$wrapper)
-    }
 }
 
 export default Select
