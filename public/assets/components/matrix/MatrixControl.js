@@ -25,7 +25,6 @@ class MatrixControl {
         this._addMatrix();
     }
     _attachEvents(){
-        //todo: enter key
         this._$button.on('click', ()=>{
             if (!this._disabled) this._calc()
         });
@@ -73,6 +72,9 @@ class MatrixControl {
             },
             onShowResultMatrix(result){
                 _this._showResult(result)
+            },
+            onCalculate(){
+                if (!this._disabled) _this._calc()
             }
         })
     }

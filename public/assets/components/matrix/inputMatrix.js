@@ -4,7 +4,11 @@ import MatrixActions from './MatrixActions'
 class InputMatrix extends Matrix {
     _attachEvents(){
         var _this = this;
-        this.$inputs.on('keyup',function(){
+        this.$inputs.on('keyup',function(evt){
+            if (evt.keyCode === 13){
+                MatrixActions.calculate();
+                return false
+            }
             _this._validate($(this))
         })
     }

@@ -1,8 +1,10 @@
+import Select from './../content/Select'
+
 class Operator {
     constructor(symbol){
-        this._getOperator(symbol);
+        this.functionName = Operator.getOperator(symbol);
         this._$wrapper = $('<div class="operator"></div>');
-        this._$symbol = $('<div class="operator__symbol" ></div>');
+        this._$symbol = $('<div class="operator__symbol" ><i class="operator__symbol-icon"></i></div>');
 
         this._attachEvents()
     }
@@ -12,12 +14,10 @@ class Operator {
         })
     }
     _showListOperators(){
-        //todo:make popup
-        this.functionName = 'multiply';
-        this._$symbol.removeClass();
-        this._$symbol.addClass('operator__symbol operator__symbol_'+this.functionName+'')
+        //todo:composite operations
+        new Select(this._$wrapper, this._$symbol, [Operator.getOperator('+'), Operator.getOperator('-'), Operator.getOperator('/'), Operator.getOperator('*')]);
     }
-    _getOperator(symbol){
+    static getOperator(symbol){
         var operators = {
             '+':'sum',
             '-':'minus',
@@ -25,7 +25,7 @@ class Operator {
             '/':'divide'
         };
         if (operators[symbol] !== undefined) {
-            this.functionName = operators[symbol]
+            return operators[symbol]
         } else {
             throw new Error('Неизвестный оператор')
         }
@@ -34,7 +34,9 @@ class Operator {
         return this.functionName
     }
     create(){
-        this._$symbol.addClass('operator__symbol_'+this.functionName+'');
+        this._$symbol
+            .attr('data-func',this.functionName)
+            .children('i').addClass('operator__symbol-icon_'+this.functionName+'')
         var $caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
         this._$wrapper
             .append(this._$symbol)
