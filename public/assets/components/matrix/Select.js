@@ -39,29 +39,22 @@ export default class Select {
     }
 
     destroy() {
-        this.close();
-        this._$selectWrapper.remove();
-        this._detachEvents()
-
-    }
-
-    close(){
-        this._$selectWrapper.hide()
+        this._$selectWrapper
+            .hide()
+            .remove();
+        this._detachEvents();
     }
 
     _fill() {
-        // var func = this._$bindItem.data().func;
-        // this._data = _.difference(this._data, [func]);
-
-        // let $item = this._$selectItem.clone().append(this._$bindItem.clone());
-        // this._$selectWrapper.append($item);
         this._data.forEach(($elem)=>{
+            //todo: off event
             let $item = this._$selectItem
                 .clone()
                 .append($elem)
-                .on('click',()=>{
+                .on('click',(evt)=>{
+                    evt.stopPropagation();
                     let value = $elem.data().value;
-                    MatrixActions.changeFunction(value);
+                    this._$bindItem.trigger('change',[value]);
                     this.destroy();
                 })
             this._$selectWrapper.append($item);

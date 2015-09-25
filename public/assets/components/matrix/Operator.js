@@ -21,16 +21,13 @@ export default class Operator {
         this._$wrapper.on('click',()=>{
             this._showListOperators()
         })
+        this._$symbol.on('change',(evt, value)=>{
+            this.setValue(value);
+            this.create();
+        })
     }
     _createStore(){
         var _this = this;
-        Reflux.createStore({
-            listenables: MatrixActions,
-            onChangeFunction(value){
-                _this.setValue(value);
-                _this.create();
-            }
-        })
     }
 
     _showListOperators(){
@@ -65,9 +62,14 @@ export default class Operator {
             .removeClass()
             .addClass('operator__symbol-icon operator__symbol-icon_'+this.getValue()+'');
         var $caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
-        return this._$wrapper
+        
+        this._$wrapper
             .empty()
             .append(this._$symbol)
             .append($caret);
+
+        this._attachEvents();
+
+        return this._$wrapper
     }
 }

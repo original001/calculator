@@ -32,7 +32,7 @@ class Calculation {
         return newArray
     }
 
-    static multiply(firstMatrix, secondMatrix){
+    static multi(firstMatrix, secondMatrix){
         return firstMatrix;
     }
     static minus(firstMatrix, secondMatrix){
