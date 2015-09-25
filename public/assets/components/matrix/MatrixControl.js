@@ -40,7 +40,6 @@ class MatrixControl {
         var newOperator = new Operator(DEFAULT_OPERATOR);
         newOperator
             .create()
-            .getHtml()
             .appendTo(this._$calcField);
 
         this._operators.push(newOperator);
@@ -110,7 +109,7 @@ class MatrixControl {
             matrixesAsArray.push(matrix.readFromTable())
         });
         this._operators.forEach((operator)=>{
-            operatorsAsArray.push(operator.functionName)
+            operatorsAsArray.push(operator._functionName)
         });
         this._$resultField.empty();
         new Calculation(matrixesAsArray, operatorsAsArray)

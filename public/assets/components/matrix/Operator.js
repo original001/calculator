@@ -1,52 +1,73 @@
-import Select from './../content/Select'
+import Select from './Select'
+import MatrixActions from './MatrixActions'
 
-class Operator {
+export default class Operator {
     constructor(symbol){
-        this.functionName = Operator.getOperator(symbol);
+        this.operators = {
+            '+':'sum',
+            '-':'minus',
+            '*':'multi',
+            '/':'devide'
+        };
+
+        this._functionName = this.operators[symbol];
         this._$wrapper = $('<div class="operator"></div>');
         this._$symbol = $('<div class="operator__symbol" ><i class="operator__symbol-icon"></i></div>');
 
-        this._attachEvents()
+        this._attachEvents();
+        this._createStore();
     }
     _attachEvents(){
         this._$wrapper.on('click',()=>{
             this._showListOperators()
         })
     }
+    _createStore(){
+        var _this = this;
+        Reflux.createStore({
+            listenables: MatrixActions,
+            onChangeFunction(value){
+                _this.setValue(value);
+                _this.create();
+            }
+        })
+    }
+
     _showListOperators(){
-        //todo:composite operations
-        new Select(this._$wrapper, this._$symbol,
-            [Operator.getOperator('+'), Operator.getOperator('-'), Operator.getOperator('/'), Operator.getOperator('*')]).create().show();
-    }
-    static getOperator(symbol){
-        var operators = {
-            '+':'sum',
-            '-':'minus',
-            '*':'multiply',
-            '/':'divide'
-        };
-        if (operators[symbol] !== undefined) {
-            return operators[symbol]
-        } else {
-            throw new Error('Неизвестный оператор')
+        var operatorsArray = [];
+        for (let operator in this.operators) {
+            if (!this.operators.hasOwnProperty(operator)) continue;
+            let value = this.operators[operator]
+            let symbol = this._$symbol
+                .clone()
+                .attr('data-value',value)
+                .children('i')
+                .removeClass()
+                .addClass('operator__symbol-icon operator__symbol-icon_'+value+'')
+                .end();
+            operatorsArray.push(symbol);
         }
+
+        new Select(this._$wrapper, this._$symbol, operatorsArray).create();
     }
+
     getValue(){
-        return this.functionName
+        return this._functionName;
     }
+    setValue(value){
+        this._functionName = value;
+    }
+
     create(){
         this._$symbol
-            .attr('data-func',this.functionName)
-            .children('i').addClass('operator__symbol-icon_'+this.functionName+'')
+            .attr('data-value',this.getValue())
+            .children('i')
+            .removeClass()
+            .addClass('operator__symbol-icon operator__symbol-icon_'+this.getValue()+'');
         var $caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
-        this._$wrapper
+        return this._$wrapper
+            .empty()
             .append(this._$symbol)
             .append($caret);
-        return this
-    }
-    getHtml(){
-        return this._$wrapper
     }
 }
-
-export default Operator
