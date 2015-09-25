@@ -1,21 +1,21 @@
 import Select from './Select'
 import MatrixActions from './MatrixActions'
 
+const OPERATORS = {
+    '+':'sum',
+    '-':'minus',
+    '*':'multi',
+    '/':'devide'
+}
+
 export default class Operator {
     constructor(symbol){
-        this.operators = {
-            '+':'sum',
-            '-':'minus',
-            '*':'multi',
-            '/':'devide'
-        };
-
-        this._functionName = this.operators[symbol];
+        this._functionName = OPERATORS[symbol];
         this._$wrapper = $('<div class="operator"></div>');
         this._$symbol = $('<div class="operator__symbol" ><i class="operator__symbol-icon"></i></div>');
+        this._$caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
 
         this._attachEvents();
-        this._createStore();
     }
     _attachEvents(){
         this._$wrapper.on('click',()=>{
@@ -23,18 +23,22 @@ export default class Operator {
         })
         this._$symbol.on('change',(evt, value)=>{
             this.setValue(value);
-            this.create();
+            this._update();
         })
     }
-    _createStore(){
-        var _this = this;
-    }
+    _update(){
+        this._$symbol
+            .attr('data-value',this.getValue())
+            .children('i')
+            .removeClass()
+            .addClass('operator__symbol-icon operator__symbol-icon_'+this.getValue()+'');
 
+    }
     _showListOperators(){
         var operatorsArray = [];
-        for (let operator in this.operators) {
-            if (!this.operators.hasOwnProperty(operator)) continue;
-            let value = this.operators[operator]
+        for (let operator in OPERATORS) {
+            if (!OPERATORS.hasOwnProperty(operator)) continue;
+            let value = OPERATORS[operator]
             let symbol = this._$symbol
                 .clone()
                 .attr('data-value',value)
@@ -56,20 +60,11 @@ export default class Operator {
     }
 
     create(){
-        this._$symbol
-            .attr('data-value',this.getValue())
-            .children('i')
-            .removeClass()
-            .addClass('operator__symbol-icon operator__symbol-icon_'+this.getValue()+'');
-        var $caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
-        
-        this._$wrapper
-            .empty()
-            .append(this._$symbol)
-            .append($caret);
-
-        this._attachEvents();
+        this._update();
 
         return this._$wrapper
+            .empty()
+            .append(this._$symbol)
+            .append(this._$caret);
     }
 }

@@ -14,6 +14,7 @@ export default class Select {
     }
 
     _attachEvents(){
+        //todo: close on body clicked
         // this._$document.on('click.select',()=>{
         //    this.destroy();
         // });
@@ -23,14 +24,13 @@ export default class Select {
         });
     }
     _detachEvents() {
-        this._$document.off('click');
         this._$selectWrapper.off('click');
     }
     create() {
         var top = this._$bindItem.position().top;
         this._$selectWrapper.css('top',top);
 
-        this._attachEvents()
+        this._attachEvents();
 
         return this._$selectWrapper
             .appendTo(this._$wrapper)
@@ -47,7 +47,6 @@ export default class Select {
 
     _fill() {
         this._data.forEach(($elem)=>{
-            //todo: off event
             let $item = this._$selectItem
                 .clone()
                 .append($elem)

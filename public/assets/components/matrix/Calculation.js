@@ -8,14 +8,13 @@ class Calculation {
         this._reduce();
     }
     _reduce(){
-    this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
-        let func = this._operators[ind-1];
-        let result = Calculation[func](firstMatrix, secondMatrix);
-        MatrixActions.showResultMatrix(result);
-        return result
-
-    })
-}
+        this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
+            let func = this._operators[ind-1];
+            let result = Calculation[func](firstMatrix, secondMatrix);
+            MatrixActions.showResultMatrix(result);
+            return result
+        })
+    }
     static sum(firstMatrix, secondMatrix){
         var newArray = [];
         if (secondMatrix.length === firstMatrix.length
