@@ -4,8 +4,7 @@ import MatrixActions from './MatrixActions'
 const OPERATORS = {
     '+':'sum',
     '-':'minus',
-    '*':'multi',
-    '/':'devide'
+    '*':'multi'
 }
 
 export default class Operator {
