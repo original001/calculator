@@ -1,3 +1,5 @@
+import * as Reflux from 'reflux'
+
 var MatrixActions = Reflux.createActions([
     'matrixError',
     'matrixValid',

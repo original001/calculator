@@ -9,8 +9,7 @@ module.exports = function(config) {
             {pattern: 'www/assets/components/**/*.js', included: false },
             {pattern: 'www/assets/plugins/**/*.min.js', included: false },
             {pattern: 'test/dist/**/*.js', included: false },
-            'test/entry.js',
-            'www/assets/plugins/reflux/**/*.min.js'
+            {pattern: 'test/entry.js', included: true },
         ],
 
         exclude: [

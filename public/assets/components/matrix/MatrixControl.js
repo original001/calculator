@@ -112,7 +112,7 @@ class MatrixControl {
             operatorsAsArray.push(operator._functionName)
         });
         this._$resultField.empty();
-        new Calculation(matrixesAsArray, operatorsAsArray)
+        new Calculation(matrixesAsArray, operatorsAsArray).run()
     }
 }
 

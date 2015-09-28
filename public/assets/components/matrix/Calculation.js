@@ -4,11 +4,9 @@ class Calculation {
     constructor(matrixesAsArray, operatorsAsArray){
         this._matrixes = matrixesAsArray || [];
         this._operators = operatorsAsArray || [];
-
-        this._reduce();
     }
-    _reduce(){
-        this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
+    run(){
+        return this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
             let func = this._operators[ind-1];
             let result = Calculation[func](firstMatrix, secondMatrix);
             MatrixActions.showResultMatrix(result);
@@ -57,7 +55,7 @@ class Calculation {
             for (var i = 0; i < secondMatrix.length; i++) {
                 newArray[i] = [];
                 for (var j = 0; j < secondMatrix[i].length; j++) {
-                    newArray[i][j] = +secondMatrix[i][j] - +firstMatrix[i][j]
+                    newArray[i][j] = +firstMatrix[i][j] - +secondMatrix[i][j]
                 }
             }
         } else {

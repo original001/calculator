@@ -13,7 +13,7 @@ require.config({
 
     // example of using a couple path translations (paths), to allow us to refer to different library dependencies, without using relative paths
     paths: {
-        'app': '../www/assets/components/entry',
+        'matrix': '../www/assets/components/matrix',
         'lodash': '../www/assets/plugins/lodash/lodash.min',
         'reflux': '../www/assets/plugins/reflux/dist/reflux.min',
         'jquery': '../www/assets/plugins/jquery/jquery-1.11.1.min',
@@ -28,9 +28,9 @@ require.config({
         //'jquery': {
         //    exports: '$'
         //},
-        //'reflux': {
-        //    exports: 'Reflux'
-        //}
+        'reflux': {
+            exports: 'Reflux'
+        }
     },
 
     // dynamically load all test files
