@@ -126,7 +126,18 @@ module.exports = function(grunt) {
 					src: ['**/*.js'],
 					dest: destRoot + path + 'components/'
 				}]
-			}
+			},
+			test: {
+                options:{
+                    sourceMap: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'test/src',
+                    src: ['**/*.js'],
+                    dest: 'test/dist'
+                }]
+            }
 		},
 		// ===================================
 		// WATCH OPTIONS
@@ -136,10 +147,14 @@ module.exports = function(grunt) {
 				livereload: true,
 				nospawn: true
 			},
-			babel: {
+			babelDist: {
 				files: [srcRoot + path + 'components/**/*.js'],
-				tasks: ['newer:babel']
+				tasks: ['newer:babel:dist']
 			},
+            babelTest: {
+                files: ['test/src/**/*.js'],
+                tasks: ['newer:babel:test']
+            },
 			main: {
 				files: [srcRoot + path + 'css/main.less',srcRoot + path + '_less/*.less'],
 				tasks: ['less:main']
