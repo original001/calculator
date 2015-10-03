@@ -5,7 +5,7 @@ const OPERATORS = {
     '+':'sum',
     '-':'minus',
     '*':'multi'
-}
+};
 
 export default class Operator {
     constructor(symbol){
@@ -16,28 +16,32 @@ export default class Operator {
 
         this._attachEvents();
     }
+    get functionName(){
+        return this._functionName;
+    }
+
     _attachEvents(){
         this._$wrapper.on('click',()=>{
             this._showListOperators()
-        })
+        });
         this._$symbol.on('change',(evt, value)=>{
-            this.setValue(value);
+            this._functionName = value;
             this._update();
         })
     }
     _update(){
         this._$symbol
-            .attr('data-value',this.getValue())
+            .attr('data-value',this._functionName)
             .children('i')
             .removeClass()
-            .addClass('operator__symbol-icon operator__symbol-icon_'+this.getValue()+'');
+            .addClass('operator__symbol-icon operator__symbol-icon_'+this._functionName+'');
 
     }
     _showListOperators(){
         var operatorsArray = [];
         for (let operator in OPERATORS) {
             if (!OPERATORS.hasOwnProperty(operator)) continue;
-            let value = OPERATORS[operator]
+            let value = OPERATORS[operator];
             let symbol = this._$symbol
                 .clone()
                 .attr('data-value',value)
@@ -48,17 +52,10 @@ export default class Operator {
             operatorsArray.push(symbol);
         }
 
-        new Select(this._$wrapper, this._$symbol, operatorsArray).create();
+        new Select({$wrapper: this._$wrapper, $element: this._$symbol, list: operatorsArray}).create();
     }
-
-    getValue(){
-        return this._functionName;
-    }
-    setValue(value){
-        this._functionName = value;
-    }
-
-    create(){
+    
+    get view(){
         this._update();
 
         return this._$wrapper

@@ -1,23 +1,19 @@
 import MatrixActions from './MatrixActions'
 
 export default class Select {
-    constructor($wrapper, $element, data){
-        this._$document = $('body');
-        this._$wrapper = $wrapper;
-        this._$bindItem = $element;
+    constructor(options){
+        this._$wrapper = options.$wrapper;
+        this._$bindItem = options.$element;
         this._$selectWrapper = $('<div class="select"></div>');
         this._$selectItem = $('<div class="select__item"></div>');
 
-        this._data = data;
+        this._itemsList = options.list || [];
 
         this._fill();
     }
 
     _attachEvents(){
         //todo: close on body clicked
-        // this._$document.on('click.select',()=>{
-        //    this.destroy();
-        // });
 
         this._$selectWrapper.on('click',(evt)=>{
             evt.stopPropagation()
@@ -46,7 +42,7 @@ export default class Select {
     }
 
     _fill() {
-        this._data.forEach(($elem)=>{
+        this._itemsList.forEach(($elem)=>{
             let $item = this._$selectItem
                 .clone()
                 .append($elem)
@@ -55,7 +51,7 @@ export default class Select {
                     let value = $elem.data().value;
                     this._$bindItem.trigger('change',[value]);
                     this.destroy();
-                })
+                });
             this._$selectWrapper.append($item);
         });
     }

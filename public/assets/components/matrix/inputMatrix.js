@@ -2,24 +2,25 @@ import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
 
 class InputMatrix extends Matrix {
-    _attachEvents(){
-        var _this = this;
-        this.$inputs.on('keyup',function(evt){
-            if (evt.keyCode === 13){
+    _attachEvents() {
+        this.$inputs.on('keyup', (evt)=> {
+            if (evt.keyCode === 13) {
                 MatrixActions.calculate();
-                return false
+                return
             }
-            _this._validate($(this))
+            this.validate();
         })
     }
-    _showError($element){
+
+    _showError($element) {
         $element.parent().addClass('error');
-        MatrixActions.matrixError()
     }
-    _clearError($element){
+
+    _clearError($element) {
         $element.parent().removeClass('error');
     }
-    _validate($element){
+
+    validate($element) {
         if (isNaN($element.val())) {
             this._showError($element)
         } else {

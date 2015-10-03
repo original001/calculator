@@ -9,7 +9,7 @@ const DEFAULT_HEIGHT = 4;
 const DEFAULT_OPERATOR = '+';
 
 class MatrixControl {
-    constructor(){
+    constructor() {
         this._operators = [];
         this._matrixes = [];
         this._$calcField = $('#calcField');
@@ -21,98 +21,88 @@ class MatrixControl {
         this._createStore();
         this._attachEvents();
     }
-    init(){
+
+    init() {
         this._addMatrix();
     }
-    _attachEvents(){
-        this._$button.on('click', ()=>{
-            if (!this._disabled) this._calc()
+
+    _attachEvents() {
+        this._$button.on('click', ()=> {
+            if (!this._disabled) this._calculate()
         });
-        this._$addButtton.on('click', ()=>{
-           this._addOperation()
+        this._$addButtton.on('click', ()=> {
+            this._addOperation()
         })
     }
-    _addOperation(){
+
+    _addOperation() {
         this._addOperator();
         this._addMatrix();
     }
-    _addOperator(){
+
+    _addOperator() {
         var newOperator = new Operator(DEFAULT_OPERATOR);
-        newOperator
-            .create()
-            .appendTo(this._$calcField);
+        newOperator.view.appendTo(this._$calcField);
 
-        this._operators.push(newOperator);
+        this._operators.push(newOperator.functionName);
     }
-    _addMatrix(){
-        var newMatrix = new InputMatrix(DEFAULT_WIDTH,DEFAULT_HEIGHT);
-        newMatrix
-            .create()
-            .getHtml()
-            .appendTo(this._$calcField);
 
-        this._matrixes.push(newMatrix);
+    _addMatrix() {
+        var newMatrix = new InputMatrix({width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT});
+        newMatrix.view.appendTo(this._$calcField);
 
-        if (this._matrixes.length <= 1){
+        this._matrixes.push(newMatrix.array);
+
+        if (this._matrixes.length <= 1) {
             this._disable()
         } else {
             this._enable()
         }
     }
-    _createStore(){
+
+    _createStore() {
         var _this = this;
         Reflux.createStore({
-            listenables:MatrixActions,
+            listenables: MatrixActions,
             onMatrixError(){
                 _this._disable()
             },
             onMatrixValid(){
-                _this._checkTables()
+                _this._enable()
             },
             onShowResultMatrix(result){
                 _this._showResult(result)
             },
             onCalculate(){
-                if (!this._disabled) _this._calc()
+                if (!this._disabled) _this._calculate()
             }
         })
     }
-    _showResult(result){
-        let height = result.length;
-        let width = result[0].length;
-        new OutputMatrix(width, height)
-            .create()
-            .writeToTable(result)
-            .getHtml()
-            .appendTo(this._$resultField)
+
+    _showResult(result) {
+        /**
+         * resulting matrix as array
+         * @type Array
+         * @input
+         */
+        var height = result.length;
+        var width = result[0].length;
+        var outMatrix = new OutputMatrix({width: width, height: height, array: result});
+        outMatrix.view.appendTo(this._$resultField.empty());
     }
-    _checkTables(){
-        _.every(this._matrixes, matrix=>{
-            return _.every(matrix.$inputs, input =>{
-                return !isNaN($(input).val())
-            })
-        }) && this._enable()
-    }
-    _disable(){
+
+    _disable() {
         this._$button.addClass('disabled');
         this._disabled = true
     }
-    _enable(){
+
+    _enable() {
         this._$button.removeClass('disabled');
         this._disabled = false
     }
 
-    _calc(){
-        var matrixesAsArray = [];
-        var operatorsAsArray = [];
-        this._matrixes.forEach((matrix)=>{
-            matrixesAsArray.push(matrix.readFromTable())
-        });
-        this._operators.forEach((operator)=>{
-            operatorsAsArray.push(operator._functionName)
-        });
-        this._$resultField.empty();
-        new Calculation(matrixesAsArray, operatorsAsArray).run()
+    _calculate() {
+        new Calculation(this._matrixes, this._operators).run()
     }
 }
 
