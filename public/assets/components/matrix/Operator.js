@@ -1,5 +1,4 @@
 import Select from './Select'
-import MatrixActions from './MatrixActions'
 
 const OPERATORS = {
     '+':'sum',

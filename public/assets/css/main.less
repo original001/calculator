@@ -247,19 +247,61 @@ a, .link {
 }
 .wrapper-table {
     position: relative;
+    z-index: 0;
     padding: 14px;
     display: inline-block;
     vertical-align: top;
     margin-right: 20px;
 }
 .table {
+  position: relative;
   display: table;
   float: left;
   border-collapse: collapse;
   border-spacing: 0;
+  &__resize {
+    &_hor, &_vert, &_diag {
+        position: absolute;
+        z-index: 10;
+        width: 15px;
+        height: 15px;
+        margin-top: -8px;
+        margin-left: -7px;
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-sizing: border-box;
+            width: 7px;
+            height: 7px;
+            margin: auto;
+            border: 2px solid #bababa;
+            background: #fff;
+        }
+    }
+    &_hor {
+        top: 50%;
+        left: 100%;
+        cursor: e-resize;
+        cursor: ew-resize;
+    }
+    &_vert {
+        top: 100%;
+        left: 50%; 
+        cursor: s-resize;
+        cursor: ns-resize;
+    }
+    &_diag {
+        left: 100%;
+        top: 100%;
+        cursor: se-resize;
+        cursor: nwse-resize;
+    }
+  } 
   &__brackets-r,
   &__brackets-l {
       position: absolute;
+      z-index: 9;
       top: 0;
       bottom: 0;
       width: 20px;

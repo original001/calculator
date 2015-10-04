@@ -23,7 +23,9 @@ class Matrix {
             }
             this.$table.append($row).appendTo(this.$wrapper)
         }
-        this.$wrapper.append($bracketRight).prepend($bracketLeft);
+        this.$wrapper
+            .append($bracketRight)
+            .prepend($bracketLeft);
         this.$rows = this.$table.find('.table__row');
         this.$inputs = this.$table.find('.table__cell-input');
     }

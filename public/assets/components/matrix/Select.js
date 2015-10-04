@@ -1,5 +1,3 @@
-import MatrixActions from './MatrixActions'
-
 export default class Select {
     constructor(options){
         this._$wrapper = options.$wrapper;
