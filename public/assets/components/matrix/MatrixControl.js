@@ -51,12 +51,12 @@ class MatrixControl {
         var newMatrix = new InputMatrix({width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT});
         newMatrix.view.appendTo(this._$calcField);
 
-        this._matrixes.push(newMatrix.array);
+        this._matrixes.push(newMatrix);
 
         if (this._matrixes.length <= 1) {
             this._disable()
         } else {
-            this._enable()
+            this._validateMatrixes()
         }
     }
 
@@ -68,7 +68,7 @@ class MatrixControl {
                 _this._disable()
             },
             onMatrixValid(){
-                _this._enable()
+                _this._validateMatrixes()
             },
             onShowResultMatrix(result){
                 _this._showResult(result)
@@ -79,6 +79,12 @@ class MatrixControl {
         })
     }
 
+    _validateMatrixes(){
+        this._matrixes.every(matrix => {
+            return matrix.validate()
+        }) && this._enable()
+    }
+
     _showResult(result) {
         /**
          * resulting matrix as array
@@ -87,7 +93,11 @@ class MatrixControl {
          */
         var height = result.length;
         var width = result[0].length;
-        var outMatrix = new OutputMatrix({width: width, height: height, array: result});
+        var outMatrix = new OutputMatrix({
+            width: width,
+            height: height,
+            array: result
+        });
         outMatrix.view.appendTo(this._$resultField.empty());
     }
 
@@ -102,7 +112,10 @@ class MatrixControl {
     }
 
     _calculate() {
-        new Calculation(this._matrixes, this._operators).run()
+        var matrixesAsArray = this._matrixes.map(matrix => {
+            return matrix.array
+        });
+        new Calculation(matrixesAsArray, this._operators).run()
     }
 }
 

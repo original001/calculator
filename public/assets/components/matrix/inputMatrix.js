@@ -3,30 +3,28 @@ import MatrixActions from './MatrixActions'
 
 class InputMatrix extends Matrix {
     _attachEvents() {
-        this.$inputs.on('keyup', (evt)=> {
+        this.$inputs.on('keyup change', (evt)=> {
             if (evt.keyCode === 13) {
                 MatrixActions.calculate();
                 return
             }
-            this.validate();
+            var $target = $(evt.target);
+            if(isNaN($target.val())){
+                MatrixActions.matrixError();
+                InputMatrix.showError($target);
+                return
+            }
+            InputMatrix.clearError($target);
+            this.validate() ? MatrixActions.matrixValid() : MatrixActions.matrixValid();
         })
     }
 
-    _showError($element) {
+    static showError($element) {
         $element.parent().addClass('error');
     }
 
-    _clearError($element) {
+    static clearError($element) {
         $element.parent().removeClass('error');
-    }
-
-    validate($element) {
-        if (isNaN($element.val())) {
-            this._showError($element)
-        } else {
-            this._clearError($element);
-            MatrixActions.matrixValid()
-        }
     }
 }
 

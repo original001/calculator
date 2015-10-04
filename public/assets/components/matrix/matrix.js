@@ -40,7 +40,12 @@ class Matrix {
     }
 
     validate() {
-        this._readFromTable()
+        var array = this._readFromTable();
+        return _.every(array, row => {
+            return _.every(row, cell => {
+                return !isNaN(cell)
+            })
+        })
     }
 
     _readFromTable() {
