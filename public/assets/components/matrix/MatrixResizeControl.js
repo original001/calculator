@@ -23,11 +23,15 @@ export default class MatrixResizeControl {
             evt.preventDefault()
 
             this._onMouseDown();
+            
+            this._$table = this.$item.closest('.table');
 
             $(document).on('mousemove.resize',evt=>{
                 evt.preventDefault();
 
                 this._onMouseMove(evt);
+
+                this._$table.addClass('add')
 
                 // MatrixActions.resizeMatrix()
 
@@ -36,6 +40,9 @@ export default class MatrixResizeControl {
             $(document).one('mouseup',evt=>{
                 // console.log(`add ${} cols, add ${} rows`)
                 this._onMouseUp();
+
+                this._$table.removeClass('add')
+
                 $(document).off('mousemove.resize');
             })
         });

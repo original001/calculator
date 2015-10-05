@@ -15,14 +15,15 @@ export default class MatrixResizeControlLeft extends MatrixResizeControl {
         this.cols = Math.ceil(shift/this.cellSize)
 
         if (Math.abs(shift) < this.resizeTollerance) {
-            console.log('do nothing')
+            this.cols = 0
         } else if (shift < 0) {
-            console.log(`show red line for ${-this.cols} cols`);
+            this.cols = Math.ceil(shift/this.cellSize) - 1
         } else {
-            console.log(`show green line for ${this.cols} cols`);
+            this.cols = Math.ceil(shift/this.cellSize)
         }
     }
     _onMouseUp(){
-        console.log('mouseUP')
+        this.$item.css('left','')
+        console.log(`add ${this.cols} cols`)
     }
 }

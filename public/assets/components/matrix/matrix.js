@@ -6,7 +6,7 @@ class Matrix {
         this.$wrapper = $('<div class="wrapper-table" ></div>');
 
         this._init();
-        this._attachEvents();
+        this._updateState();
     }
 
     _init() {
@@ -26,12 +26,15 @@ class Matrix {
         this.$wrapper
             .append($bracketRight)
             .prepend($bracketLeft);
-        this.$rows = this.$table.find('.table__row');
-        this.$inputs = this.$table.find('.table__cell-input');
     }
 
-    _attachEvents() {
+    _updateState(){
+        this.$rows = this.$table.find('.table__row');
+        this.$inputs = this.$table.find('.table__cell-input');
+        this._attachEvents();
     }
+
+    _attachEvents() {}
 
     get array() {
         return this._readFromTable()
@@ -39,6 +42,33 @@ class Matrix {
 
     get view() {
         return this.$wrapper;
+    }
+
+    addRows(rows){
+        for (var i = 0; i < rows; i++) {
+            var $row = $('<div class="table__row" />');
+            for (var j = 0; j < this._width; j++) {
+                let $input = $('<input type="text" class="table__cell-input" />');
+                let $cell = $('<div class="table__cell" />');
+                $cell.append($input);
+                $row.append($cell)
+            }
+            this.$table.append($row)
+        }
+        this._updateState();
+    }
+
+
+    addCols(cols){
+        for (var i = 0; i < cols; i++) {
+            this.$rows.each(function(){
+                let $input = $('<input type="text" class="table__cell-input" />');
+                let $cell = $('<div class="table__cell" />');
+                $cell.append($input);
+                var $this = $(this).append($cell)
+            })
+        }
+        this._updateState();
     }
 
     validate() {
