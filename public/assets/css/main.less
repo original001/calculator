@@ -275,8 +275,14 @@ a, .link {
             width: 7px;
             height: 7px;
             margin: auto;
+            border-radius: 2px;
             border: 2px solid #bababa;
             background: #fff;
+            transition: width .1s, height .1s;
+        }
+        &:active:before {
+            width: 10px;
+            height: 10px;
         }
     }
     &_hor {
