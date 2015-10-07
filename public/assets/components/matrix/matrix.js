@@ -32,9 +32,19 @@ class Matrix {
         this.$rows = this.$table.find('.table__row');
         this.$inputs = this.$table.find('.table__cell-input');
         this._attachEvents();
+        this._width = this.$rows.first().children().length;
+        this._height = this.$rows.length
     }
 
     _attachEvents() {}
+
+    get width(){
+        return this._width;
+    }
+
+    get height(){
+        return this._height;
+    }
 
     get array() {
         return this._readFromTable()
@@ -58,6 +68,12 @@ class Matrix {
         this._updateState();
     }
 
+    removeRows(rows){
+        while (rows-- >= 1){
+            //todo: detach rows
+            this.$table.find('.table__row').last().remove()
+        }
+    }
 
     addCols(cols){
         for (var i = 0; i < cols; i++) {
@@ -66,6 +82,16 @@ class Matrix {
                 let $cell = $('<div class="table__cell" />');
                 $cell.append($input);
                 var $this = $(this).append($cell)
+            })
+        }
+        this._updateState();
+    }
+
+    removeCols(cols){
+        if (this.$rows.first().find('.table__cell').length < 2) return;
+        for (var i = 0; i < cols; i++) {
+            this.$rows.each(function(){
+                $(this).find('.table__cell').last().remove()
             })
         }
         this._updateState();

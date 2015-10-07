@@ -25,9 +25,9 @@ class InputMatrix extends Matrix {
 
     _init(){
         super._init();
-        var horizontalResize = new MatrixResizeControlLeft($('<div class="table__resize_hor"></div>'))
-        var verticalResize = new MatrixResizeControlTop($('<div class="table__resize_vert"></div>'))
-        var diagonalResize = new MatrixResizeControlTopLeft($('<div class="table__resize_diag"></div>'))
+        var horizontalResize = new MatrixResizeControlLeft($('<div class="table__resize_hor"></div>'),this);
+        var verticalResize = new MatrixResizeControlTop($('<div class="table__resize_vert"></div>'), this);
+        var diagonalResize = new MatrixResizeControlTopLeft($('<div class="table__resize_diag"></div>'), this);
         this.$table
             .prepend(diagonalResize.$item)
             .prepend(verticalResize.$item)

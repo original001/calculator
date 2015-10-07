@@ -2,44 +2,39 @@ import MatrixResizeControl from './MatrixResizeControl'
 
 export default class MatrixResizeControlLeft extends MatrixResizeControl {
     _onMouseDown(){
-        if (dir === 'left' || dir === 'top') {
-            $target.css(dir, $target.position()[dir]);
-            var absDir = $target.offset()[dir]
-        } else {
-            $target.css({
-                left: $target.position().left,
-                top: $target.position().top
-            })
-            var absLeft = $target.offset().left
-            var absTop = $target.offset().top
-        }
+        this._top = this.$item.position().top;
+        this.$item.css('top', this._top);
+
+        this._absTop = this.$item.offset().top
     }
-    _onMouseMove(){
-        if (dir === 'left') {
-            var shift = evt.clientX - absDir;
-            this.cols = Math.ceil(shift/CELL_SIZE)
-        } else if (dir === 'top') {
-            var shift = evt.clientY - absDir;
-            this.rows = Math.ceil(shift/CELL_SIZE)
-        } else if (dir === 'left-top') {
-            var shiftX = evt.clientX - absLeft;
-            var shiftY = evt.clientY - absTop;
+    _onMouseMove(evt){
+        var shift = evt.clientY - this._absTop;
+        var edgeMatrixHeight = (this.matrix.height - 1) * MatrixResizeControl.cellSize;
+
+        if (shift < - edgeMatrixHeight + MatrixResizeControl.resizeTollerance) {
+            this.rows = - edgeMatrixHeight/MatrixResizeControl.cellSize;
+            this.$item.css('top',this._top - edgeMatrixHeight);
+            return;
         }
 
-        if (shift > 0) {
-            console.log(`show green line for ${this.cols}`);
-            if (dir === 'left') {
-                console.log(' cols')
-            } else if (dir === 'top') {
-                console.log( 'rows')
-            }
+        this.$item.css('top',this._top + shift);
+
+        this.rows = Math.ceil(shift/MatrixResizeControl.cellSize);
+
+        if (Math.abs(shift) < MatrixResizeControl.resizeTollerance) {
+            this.rows = 0
+        } else if (shift < 0) {
+            this.rows = Math.ceil(shift/MatrixResizeControl.cellSize) - 1
         } else {
-            console.log(`show red line for ${-this.cols}`);
-            if (dir === 'left') {
-                console.log(' cols')
-            } else if (dir === 'top') {
-                console.log( 'rows')
-            }
+            this.rows = Math.ceil(shift/MatrixResizeControl.cellSize)
+        }
+    }
+    _onMouseUp(){
+        this.$item.css('top','');
+        if (this.rows > 0) {
+            this.matrix.addRows(this.rows);
+        } else if (this.rows < 0) {
+            this.matrix.removeRows(-this.rows);
         }
     }
 }
