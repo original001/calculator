@@ -1,4 +1,4 @@
-class Matrix {
+export default class Matrix {
     constructor(options) {
         this._width = options.width || 0;
         this._height = options.height || 0;
@@ -73,6 +73,7 @@ class Matrix {
             //todo: detach rows
             this.$table.find('.table__row').last().remove()
         }
+        this._updateState();
     }
 
     addCols(cols){
@@ -118,5 +119,3 @@ class Matrix {
         return array;
     }
 }
-
-export default Matrix

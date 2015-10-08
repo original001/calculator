@@ -1,45 +1,76 @@
 import MatrixResizeControl from './MatrixResizeControl'
 
-export default class MatrixResizeControlLeft extends MatrixResizeControl {
+export default class MatrixResizeControlTopLeft extends MatrixResizeControl {
     _onMouseDown(){
-        if (dir === 'left' || dir === 'top') {
-            $target.css(dir, $target.position()[dir]);
-            var absDir = $target.offset()[dir]
-        } else {
-            $target.css({
-                left: $target.position().left,
-                top: $target.position().top
-            })
-            var absLeft = $target.offset().left
-            var absTop = $target.offset().top
-        }
+        this._top = this.$item.position().top;
+        this._left = this.$item.position().left;
+
+        this.$item.css({
+            top: this._top,
+            left: this._left
+        });
+
+        this._absLeft = this.$item.offset().left;
+        this._absTop = this.$item.offset().top
     }
-    _onMouseMove(){
-        if (dir === 'left') {
-            var shift = evt.clientX - absDir;
-            this.cols = Math.ceil(shift/CELL_SIZE)
-        } else if (dir === 'top') {
-            var shift = evt.clientY - absDir;
-            this.rows = Math.ceil(shift/CELL_SIZE)
-        } else if (dir === 'left-top') {
-            var shiftX = evt.clientX - absLeft;
-            var shiftY = evt.clientY - absTop;
+    _onMouseMove(evt){
+        var shiftY = evt.clientY - this._absTop;
+        var shiftX = evt.clientX - this._absLeft;
+
+        var edgeMatrixHeight = (this.matrix.height - 1) * MatrixResizeControl.cellSize;
+        var edgeMatrixWidth = (this.matrix.width - 1) * MatrixResizeControl.cellSize;
+
+        if (shiftY < - edgeMatrixHeight + MatrixResizeControl.resizeTollerance) {
+            this.rows = - edgeMatrixHeight/MatrixResizeControl.cellSize;
+            this.$item.css('top',this._top - edgeMatrixHeight);
+            return;
+        } 
+
+        if (shiftX < - edgeMatrixWidth + MatrixResizeControl.resizeTollerance) {
+            this.cols = - edgeMatrixWidth/MatrixResizeControl.cellSize;
+            this.$item.css('left',this._left - edgeMatrixWidth);
+            return;
         }
 
-        if (shift > 0) {
-            console.log(`show green line for ${this.cols}`);
-            if (dir === 'left') {
-                console.log(' cols')
-            } else if (dir === 'top') {
-                console.log( 'rows')
-            }
+        this.$item.css({
+            top: this._top + shiftY,
+            left: this._left + shiftX
+        });
+
+        this.rows = Math.ceil(shiftY/MatrixResizeControl.cellSize);
+        this.cols = Math.ceil(shiftX/MatrixResizeControl.cellSize);
+
+        if (Math.abs(shiftY) < MatrixResizeControl.resizeTollerance) {
+            this.rows = 0
+        } else if (shiftY < 0) {
+            this.rows = Math.ceil(shiftY/MatrixResizeControl.cellSize) - 1
         } else {
-            console.log(`show red line for ${-this.cols}`);
-            if (dir === 'left') {
-                console.log(' cols')
-            } else if (dir === 'top') {
-                console.log( 'rows')
-            }
+            this.rows = Math.ceil(shiftY/MatrixResizeControl.cellSize)
+        }
+
+        if (Math.abs(shiftX) < MatrixResizeControl.resizeTollerance) {
+            this.cols = 0
+        } else if (shiftX < 0) {
+            this.cols = Math.ceil(shiftX/MatrixResizeControl.cellSize) - 1
+        } else {
+            this.cols = Math.ceil(shiftX/MatrixResizeControl.cellSize)
+        }
+    }
+    _onMouseUp(){
+        this.$item.css({
+            top: '',
+            left: ''
+        });
+        if (this.rows > 0) {
+            this.matrix.addRows(this.rows);
+        } else if (this.rows < 0) {
+            this.matrix.removeRows(-this.rows);
+        }
+        
+        if (this.cols > 0) {
+            this.matrix.addCols(this.cols);
+        } else if (this.cols < 0) {
+            this.matrix.removeCols(-this.cols);
         }
     }
 }

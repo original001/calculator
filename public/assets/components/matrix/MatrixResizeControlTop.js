@@ -1,6 +1,6 @@
 import MatrixResizeControl from './MatrixResizeControl'
 
-export default class MatrixResizeControlLeft extends MatrixResizeControl {
+export default class MatrixResizeControlTop extends MatrixResizeControl {
     _onMouseDown(){
         this._top = this.$item.position().top;
         this.$item.css('top', this._top);
