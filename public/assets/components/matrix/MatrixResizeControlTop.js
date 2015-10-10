@@ -8,33 +8,17 @@ export default class MatrixResizeControlTop extends MatrixResizeControl {
         this._absTop = this.$item.offset().top
     }
     _onMouseMove(evt){
-        var shift = evt.clientY - this._absTop;
-        var edgeMatrixHeight = (this.matrix.height - 1) * MatrixResizeControl.cellSize;
+        var shiftY = evt.clientY - this._absTop;
 
-        if (shift < - edgeMatrixHeight + MatrixResizeControl.resizeTollerance) {
-            this.rows = - edgeMatrixHeight/MatrixResizeControl.cellSize;
-            this.$item.css('top',this._top - edgeMatrixHeight);
-            return;
-        }
+        if (this.resolveEdges('rows', shiftY, 'top', this._top)) return;
 
-        this.$item.css('top',this._top + shift);
+        this.$item.css('top',this._top + shiftY);
 
-        this.rows = Math.ceil(shift/MatrixResizeControl.cellSize);
-
-        if (Math.abs(shift) < MatrixResizeControl.resizeTollerance) {
-            this.rows = 0
-        } else if (shift < 0) {
-            this.rows = Math.ceil(shift/MatrixResizeControl.cellSize) - 1
-        } else {
-            this.rows = Math.ceil(shift/MatrixResizeControl.cellSize)
-        }
+        this.resolveCount('rows',shiftY)
     }
     _onMouseUp(){
         this.$item.css('top','');
-        if (this.rows > 0) {
-            this.matrix.addRows(this.rows);
-        } else if (this.rows < 0) {
-            this.matrix.removeRows(-this.rows);
-        }
+
+        this.resolveAdding('rows');
     }
 }

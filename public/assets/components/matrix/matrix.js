@@ -1,7 +1,9 @@
 export default class Matrix {
     constructor(options) {
-        this._width = options.width || 0;
-        this._height = options.height || 0;
+        ({
+            width: this._width = 1, 
+            height: this._height = 1
+        } = options);
 
         this.$wrapper = $('<div class="wrapper-table" ></div>');
 
@@ -100,11 +102,7 @@ export default class Matrix {
 
     validate() {
         var array = this._readFromTable();
-        return _.every(array, row => {
-            return _.every(row, cell => {
-                return !isNaN(cell)
-            })
-        })
+        return _.every(array, row => _.every(row, cell => !isNaN(cell)))
     }
 
     _readFromTable() {
