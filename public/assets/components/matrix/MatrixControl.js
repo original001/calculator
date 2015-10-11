@@ -44,7 +44,7 @@ class MatrixControl {
         var newOperator = new Operator(DEFAULT_OPERATOR);
         newOperator.view.appendTo(this._$calcField);
 
-        this._operators.push(newOperator.functionName);
+        this._operators.push(newOperator);
     }
 
     _addMatrix() {
@@ -112,10 +112,9 @@ class MatrixControl {
     }
 
     _calculate() {
-        var matrixesAsArray = this._matrixes.map(matrix => {
-            return matrix.array
-        });
-        new Calculation(matrixesAsArray, this._operators).run()
+        var matrixesAsArray = this._matrixes.map(matrix => matrix.array);
+        var operatorsAsArray = this._operators.map(operator => operator.functionName)
+        new Calculation(matrixesAsArray, operatorsAsArray).run()
     }
 }
 
