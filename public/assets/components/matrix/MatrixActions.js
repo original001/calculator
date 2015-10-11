@@ -5,6 +5,7 @@ var MatrixActions = Reflux.createActions([
     'matrixValid',
     'calculate',
     {'changeFunction':arguments},
-    {"showResultMatrix":arguments}
+    {"showResultMatrix":arguments},
+    {'calculationError':arguments}
 ]);
 export default MatrixActions

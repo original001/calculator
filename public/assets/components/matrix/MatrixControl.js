@@ -75,21 +75,22 @@ class MatrixControl {
             },
             onCalculate(){
                 if (!this._disabled) _this._calculate()
+            },
+            onCalculationError(errorMessage){
+                alert(errorMessage)
             }
         })
     }
 
     _validateMatrixes(){
-        this._matrixes.every(matrix => {
-            return matrix.validate()
-        }) && this._enable()
+        this._matrixes.every(matrix => matrix.validate()) && this._enable()
     }
 
     _showResult(result) {
         /**
-         * resulting matrix as array
+         * @input result
+         * @description resulting matrix as array
          * @type Array
-         * @input
          */
         var height = result.length;
         var width = result[0].length;

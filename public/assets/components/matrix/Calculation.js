@@ -6,12 +6,17 @@ class Calculation {
         this._operators = operatorsAsArray || [];
     }
     run(){
-        return this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
-            let func = this._operators[ind-1];
-            let result = Calculation[func](firstMatrix, secondMatrix);
-            MatrixActions.showResultMatrix(result);
-            return result
-        })
+        try {
+            return this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
+                let func = this._operators[ind-1];
+                let result = Calculation[func](firstMatrix, secondMatrix);
+                MatrixActions.showResultMatrix(result);
+                return result
+            })
+        }
+        catch (e) {
+            MatrixActions.calculationError(e.message);
+        }
     }
     static sum(firstMatrix, secondMatrix){
         var newArray = [];
@@ -24,7 +29,7 @@ class Calculation {
                 }
             }
         } else {
-            throw new Error('Массивы разной величины');
+            throw new Error('Массивы разной величины')
         }
         return newArray
     }
