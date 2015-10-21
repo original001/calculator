@@ -1,5 +1,5 @@
-import MatrixComponent from 'components/matrix/index'
+import MatrixComponent from './components/matrix/index'
 
-import {} from 'styles/main.less'
+import {} from './styles/main.less'
 
 export default MatrixComponent

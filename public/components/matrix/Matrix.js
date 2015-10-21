@@ -1,9 +1,7 @@
 export default class Matrix {
-    constructor(options) {
-        ({
-            width: this._width = 1, 
-            height: this._height = 1
-        } = options);
+    constructor({width, height}) {
+        this._width = width || 1;
+        this._height = height || 1;
 
         this.$wrapper = $('<div class="wrapper-table" ></div>');
 
