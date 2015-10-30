@@ -1,39 +1,40 @@
+var webpackConfig = require('./webpack-test.config.js');
+webpackConfig.devtool = 'inline-source-map';
+
 module.exports = function(config) {
     config.set({
 
         basePath: '',
 
-        frameworks: ['jasmine', 'requirejs'],
+        frameworks: ['jasmine'],
 
-        files: [
-            {pattern: 'www/assets/components/**/*.js', included: false },
-            {pattern: 'www/assets/plugins/**/*.min.js', included: false },
-            {pattern: 'test/dist/**/*.js', included: false },
-            {pattern: 'test/entry.js', included: true },
-        ],
-
-        exclude: [
-            //'www/assets/plugins/requirejs/'
-        ],
+        files: ['test/index.js'],
 
         preprocessors: {
-            '**/*.coffee': 'coffee'
+            'test/index.js': ['webpack', 'sourcemap']
         },
 
-        coffeePreprocessor: {
-            options: {
-                bare: true,
-                sourceMap: false
-            }
+        plugins: [
+            'karma-webpack',
+            'karma-jasmine',
+            'karma-osx-reporter',
+            'karma-phantomjs-launcher',
+            'karma-sourcemap-loader'
+        ],
+
+        webpack: webpackConfig,
+
+        webpackMiddleware: {
+            noInfo: true,
         },
+
+        reporters: ['progress', 'osx'],
 
         osxReporter: {
             host: "localhost",
             port: 1337,
             notificationMode: 'failChange'
         },
-
-        reporters: ['progress', 'osx'],
 
         port: 8000,
 
