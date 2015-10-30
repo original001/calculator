@@ -70,14 +70,8 @@ class MatrixControl {
             onMatrixValid(){
                 _this._validateMatrixes()
             },
-            onShowResultMatrix(result){
-                _this._showResult(result)
-            },
             onCalculate(){
                 if (!this._disabled) _this._calculate()
-            },
-            onCalculationError(errorMessage){
-                alert(errorMessage)
             }
         })
     }
@@ -114,8 +108,13 @@ class MatrixControl {
 
     _calculate() {
         var matrixesAsArray = this._matrixes.map(matrix => matrix.array);
-        var operatorsAsArray = this._operators.map(operator => operator.functionName)
-        new Calculation(matrixesAsArray, operatorsAsArray).run()
+        var operatorsAsArray = this._operators.map(operator => operator.functionName);
+        try {
+            let resultArray = Calculation.run(matrixesAsArray, operatorsAsArray);
+            this._showResult(resultArray);
+        } catch (e) {
+            //todo: exception
+        }
     }
 }
 

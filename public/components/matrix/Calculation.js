@@ -1,22 +1,11 @@
 import MatrixActions from './MatrixActions'
 
 class Calculation {
-    constructor(matrixesAsArray, operatorsAsArray){
-        this._matrixes = matrixesAsArray || [];
-        this._operators = operatorsAsArray || [];
-    }
-    run(){
-        try {
-            return this._matrixes.reduce((firstMatrix, secondMatrix, ind)=>{
-                let func = this._operators[ind-1];
-                let result = Calculation[func](firstMatrix, secondMatrix);
-                MatrixActions.showResultMatrix(result);
-                return result
-            })
-        }
-        catch (e) {
-            MatrixActions.calculationError(e.message);
-        }
+    static run(matrixesAsArray, operatorsAsArray){
+        return matrixesAsArray.reduce((firstMatrix, secondMatrix, ind)=>{
+            let func = operatorsAsArray[ind-1];
+            return Calculation[func](firstMatrix, secondMatrix);
+        })
     }
     static sum(firstMatrix, secondMatrix){
         var newArray = [];
@@ -29,7 +18,7 @@ class Calculation {
                 }
             }
         } else {
-            throw new Error('Массивы разной величины')
+            throw new Error('Массивы разной величины');
         }
         return newArray
     }
@@ -38,7 +27,7 @@ class Calculation {
         var newArray = [];
         var rowFirstMatrix = _.first(firstMatrix);
         var rowSecondMatrix = _.first(secondMatrix);
-        if (firstMatrix.length === rowSecondMatrix.length) {
+        if (rowFirstMatrix.length === secondMatrix.length) {
             for (var i = 0; i < firstMatrix.length; i++) {
                 newArray[i] = [];
                 for (var j = 0; j < rowSecondMatrix.length; j++) {
@@ -49,7 +38,7 @@ class Calculation {
                 }
             }
         } else {
-            throw new Error('Форма матриц не согласована')
+            throw new Error('Форма матриц не согласована');
         }
         return newArray;
     }
