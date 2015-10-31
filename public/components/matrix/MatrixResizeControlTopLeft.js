@@ -1,4 +1,5 @@
 import MatrixResizeControl from './MatrixResizeControl'
+import config from './config'
 
 export default class MatrixResizeControlTopLeft extends MatrixResizeControl {
     _onMouseDown(){
@@ -17,16 +18,42 @@ export default class MatrixResizeControlTopLeft extends MatrixResizeControl {
         var shiftY = evt.clientY - this._absTop;
         var shiftX = evt.clientX - this._absLeft;
 
-        if (this.resolveEdges('rows', shiftY, 'top', this._top)) return;
-        if (this.resolveEdges('cols', shiftX, 'left', this._left)) return;
+        var edgeMatrixCoordY = (this.matrix.height - 1) * config.cell_size;
+
+        if (shiftY < - edgeMatrixCoordY + config.resize_tollerance) {
+            this.rows = - edgeMatrixCoordY/config.cell_size;
+            this.$item.css('top', this._top - edgeMatrixCoordY);
+            return;
+        } 
+
+        var edgeMatrixCoordX = (this.matrix.width - 1) * config.cell_size;
+
+        if (shiftX < - edgeMatrixCoordX + config.resize_tollerance) {
+            this.cols = - edgeMatrixCoordX/config.cell_size;
+            this.$item.css('left', this._left - edgeMatrixCoordX);
+            return;
+        } 
 
         this.$item.css({
             top: this._top + shiftY,
             left: this._left + shiftX
         });
 
-        this.resolveCount('rows',shiftY)
-        this.resolveCount('cols',shiftX)
+        if (Math.abs(shiftY) < config.resize_tollerance) {
+            this.rows = 0
+        } else if (shiftY < 0) {
+            this.rows = Math.ceil((shiftY + config.resize_tollerance)/config.cell_size) - 1
+        } else {
+            this.rows = Math.ceil((shiftY - config.resize_tollerance)/config.cell_size)
+        }
+
+        if (Math.abs(shiftX) < config.resize_tollerance) {
+            this.cols = 0
+        } else if (shiftX < 0) {
+            this.cols = Math.ceil((shiftX + config.resize_tollerance)/config.cell_size) - 1
+        } else {
+            this.cols = Math.ceil((shiftX - config.resize_tollerance)/config.cell_size)
+        }
     }
     _onMouseUp(){
         this.$item.css({
@@ -34,7 +61,16 @@ export default class MatrixResizeControlTopLeft extends MatrixResizeControl {
             left: ''
         });
 
-        this.resolveAdding('rows');
-        this.resolveAdding('cols');
+        if (this.rows > 0) {
+            this.matrix.addRows(this.rows);
+        } else if (this.rows < 0) {
+            this.matrix.removeRows(-this.rows);
+        }
+        
+        if (this.cols > 0) {
+            this.matrix.addCols(this.cols);
+        } else if (this.cols < 0) {
+            this.matrix.removeCols(-this.cols);
+        }
     }
 }

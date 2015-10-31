@@ -32,6 +32,7 @@ export default class MatrixResizeControlLeft extends MatrixResizeControl {
     }
     _onMouseUp(){
         this.$item.css('left','');
+        
         if (this.cols > 0) {
             this.matrix.addCols(this.cols);
         } else if (this.cols < 0) {
