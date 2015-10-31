@@ -33,6 +33,11 @@ module.exports = function(config) {
             dir : 'test/coverage/'
         },
 
+        phantomjsLauncher: {
+            // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+            exitOnResourceError: true
+        },
+
         port: 8000,
 
         colors: true,
