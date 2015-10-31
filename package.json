@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server -d --inline",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "karma start"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "babel-core": "^5.8.25",
+    "es5-shim": "^4.2.0",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "reflux": "^0.3.0"
@@ -20,6 +22,7 @@
     "css-loader": "^0.19.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
+    "istanbul-instrumenter-loader": "^0.1.3",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.10",
     "karma-chrome-launcher": "^0.2.0",

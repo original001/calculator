@@ -8,19 +8,11 @@ module.exports = function(config) {
 
         frameworks: ['jasmine'],
 
-        files: ['test/index.js'],
+        files: ['test/**/*Test.js'],
 
         preprocessors: {
-            'test/index.js': ['webpack', 'sourcemap']
+            'test/**/*Test.js': ['webpack', 'sourcemap', 'coverage']
         },
-
-        plugins: [
-            'karma-webpack',
-            'karma-jasmine',
-            'karma-osx-reporter',
-            'karma-phantomjs-launcher',
-            'karma-sourcemap-loader'
-        ],
 
         webpack: webpackConfig,
 
@@ -28,12 +20,17 @@ module.exports = function(config) {
             noInfo: true,
         },
 
-        reporters: ['progress', 'osx'],
+        reporters: ['progress', 'osx', 'coverage'],
 
         osxReporter: {
             host: "localhost",
             port: 1337,
             notificationMode: 'failChange'
+        },
+
+        coverageReporter: {
+            type : 'html',
+            dir : 'test/coverage/'
         },
 
         port: 8000,
@@ -46,7 +43,15 @@ module.exports = function(config) {
 
         browsers: ['PhantomJS'],
 
-        singleRun: false
+        singleRun: false,
 
+        plugins: [
+            'karma-webpack',
+            'karma-jasmine',
+            'karma-osx-reporter',
+            'karma-phantomjs-launcher',
+            'karma-sourcemap-loader',
+            'karma-coverage'
+        ]
     })
 };
