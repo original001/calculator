@@ -8,6 +8,11 @@ const config = {
         '+':'sum',
         '-':'minus',
         '*':'multi'
+    },
+    resizerTypes: {
+        horizontal: 'hor',
+        vertical: 'vert',
+        diagonal: 'diag'
     }
 };
 

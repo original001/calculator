@@ -1,8 +1,8 @@
 import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
-import MatrixResizeControlLeft from './MatrixResizeControlLeft'
-import MatrixResizeControlTop from './MatrixResizeControlTop'
 import MatrixResizeTrigger from './MatrixResizeTrigger'
+
+import config from './config';
 
 class InputMatrix extends Matrix {
     _attachEvents() {
@@ -25,13 +25,11 @@ class InputMatrix extends Matrix {
 
     _init(){
         super._init();
-        var horizontalResize = new MatrixResizeTrigger($('<div class="table__resize_hor"></div>'),this, 'horizontal');
-        var verticalResize = new MatrixResizeTrigger($('<div class="table__resize_vert"></div>'), this, 'vertical');
-        var diagonalResize = new MatrixResizeTrigger($('<div class="table__resize_diag"></div>'), this, 'diagonal');
+
         this.$table
-            .prepend(diagonalResize.$item)
-            .prepend(verticalResize.$item)
-            .prepend(horizontalResize.$item);
+            .prepend(new MatrixResizeTrigger(this, config.resizerTypes.diagonal).$item)
+            .prepend(new MatrixResizeTrigger(this, config.resizerTypes.vertical).$item)
+            .prepend(new MatrixResizeTrigger(this, config.resizerTypes.horizontal).$item);
     }
 
     static showError($element) {

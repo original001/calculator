@@ -1,49 +1,49 @@
 import MatrixActions from './MatrixActions'
 
+import config from './config'
+
 export default class MatrixResizeControl {
-    constructor($item, matrix, type){
-        this.$item = $item;
+    constructor(matrix, type){
+        this.$item = $(`<div class="table__resize_${type}" />`);
         this.matrix = matrix;
         this.type = type;
-        this.rows = 0;
-        this.cols = 0;
 
-        this._attachEvents()
+        this._attachEvents();
     }
 
     _attachEvents(){
         this.$item.on('mousedown',evt=>{
             evt.preventDefault();
 
-            this._onMouseDown();
+            this.onMouseDown();
             
             this._$table = this.$item.closest('.table');
 
             $(document).on('mousemove.resize',evt=>{
                 evt.preventDefault();
 
-                var shift = {top:0,left:0};
+                var shift = {top:null,left:null};
 
                 switch (this.type) {
-                    case 'horizontal':
+                    case config.resizerTypes.horizontal:
                         shift.left = evt.clientX;
                         break;
-                    case 'vertical':
+                    case config.resizerTypes.vertical:
                         shift.top = evt.clientY;
                         break;
-                    case 'diagonal':
+                    case config.resizerTypes.diagonal:
                         shift.left = evt.clientX;
                         shift.top = evt.clientY;
                         break;
                 }
                 
-                this._onMouseMove(shift);
+                this.onMouseMove(shift);
 
                 this._$table.addClass('add');
             });
             
             $(document).one('mouseup',()=>{
-                this._onMouseUp();
+                this.onMouseUp();
 
                 this._$table.removeClass('add');
 
@@ -51,7 +51,7 @@ export default class MatrixResizeControl {
             })
         });
     }
-    _onMouseDown(){}
-    _onMouseMove(){}
-    _onMouseUp(){}
+    onMouseDown(){}
+    onMouseMove(){}
+    onMouseUp(){}
 }

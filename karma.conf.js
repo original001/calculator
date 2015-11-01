@@ -55,6 +55,7 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-osx-reporter',
             'karma-phantomjs-launcher',
+            'karma-chrome-launcher',
             'karma-sourcemap-loader',
             'karma-coverage'
         ]
