@@ -4,7 +4,6 @@ import '../../public/components/matrix/config'
 
 describe('should', ()=> {
     var resizer;
-    var $el;
     var matrix;
 
     beforeEach(()=> {
@@ -12,11 +11,6 @@ describe('should', ()=> {
         matrix.width = 4;
         resizer = new MatrixResizeTrigger(matrix, config.resizerTypes.horizontal);
         resizer.onMouseDown();
-    });
-
-    afterEach(()=> {
-        resizer = null;
-        $el = null;
     });
 
     it('remove one column when the shift is equal to - half', ()=> {
@@ -80,7 +74,6 @@ describe('should', ()=> {
 
 describe('should', ()=> {
     var resizer;
-    var $el;
     var matrix;
 
     beforeEach(()=> {
@@ -88,11 +81,6 @@ describe('should', ()=> {
         matrix.height = 4;
         resizer = new MatrixResizeTrigger(matrix, config.resizerTypes.vertical);
         resizer.onMouseDown();
-    });
-
-    afterEach(()=> {
-        resizer = null;
-        $el = null;
     });
 
     it('remove one column when the shift is equal to - half', ()=> {
@@ -155,7 +143,6 @@ describe('should', ()=> {
 
 describe('should', ()=> {
     var resizer;
-    var $el;
     var matrix;
     const offset = 300;
 
@@ -168,11 +155,6 @@ describe('should', ()=> {
         resizer.$item.position = () => ({top: 160, left: 160});
         resizer.$item.offset = () => ({top: offset, left: offset});
         resizer.onMouseDown();
-    });
-
-    afterEach(()=> {
-        resizer = null;
-        $el = null;
     });
 
     it('move left when cursor on edge of top', ()=> {

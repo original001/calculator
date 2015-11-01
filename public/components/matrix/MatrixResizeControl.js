@@ -40,6 +40,8 @@ export default class MatrixResizeControl {
                 
                 this.onMouseMove(shift);
 
+                this.resizeHelper.show(this.colsToAdd, this.rowsToAdd);
+
                 this._$table.addClass('add');
             });
             

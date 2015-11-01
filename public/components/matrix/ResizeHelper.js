@@ -24,14 +24,14 @@ export default class ResizeHelper {
             })
             .appendTo(this._$wrapper);
 
-        this._$wrapper.prependTo(this._$matrixWrapper);
+        this._$matrixWrapper.prepend(this._$wrapper);
     }
 
     destroy() {
         this._$wrapper.empty().remove();
     }
 
-    show({shiftTop, shiftLeft}) {
+    show(colsToAdd, rowsToAdd) {
 
     }
 }

@@ -20,8 +20,7 @@ export default class MatrixResizeTrigger extends MatrixResizeControl {
         var shiftX = shift.left != null ? shift.left - this._absLeft : 0;
 
         this._calcVerticalCoord(shiftY);
-        this._calcHorizontalCoord(shiftX)
-
+        this._calcHorizontalCoord(shiftX);
     }
 
     _calcHorizontalCoord(shiftX){
