@@ -2,7 +2,7 @@ import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
 import MatrixResizeControlLeft from './MatrixResizeControlLeft'
 import MatrixResizeControlTop from './MatrixResizeControlTop'
-import MatrixResizeControlTopLeft from './MatrixResizeControlTopLeft'
+import MatrixResizeTrigger from './MatrixResizeTrigger'
 
 class InputMatrix extends Matrix {
     _attachEvents() {
@@ -25,9 +25,9 @@ class InputMatrix extends Matrix {
 
     _init(){
         super._init();
-        var horizontalResize = new MatrixResizeControlLeft($('<div class="table__resize_hor"></div>'),this);
-        var verticalResize = new MatrixResizeControlTop($('<div class="table__resize_vert"></div>'), this);
-        var diagonalResize = new MatrixResizeControlTopLeft($('<div class="table__resize_diag"></div>'), this);
+        var horizontalResize = new MatrixResizeTrigger($('<div class="table__resize_hor"></div>'),this, 'horizontal');
+        var verticalResize = new MatrixResizeTrigger($('<div class="table__resize_vert"></div>'), this, 'vertical');
+        var diagonalResize = new MatrixResizeTrigger($('<div class="table__resize_diag"></div>'), this, 'diagonal');
         this.$table
             .prepend(diagonalResize.$item)
             .prepend(verticalResize.$item)

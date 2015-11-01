@@ -14,9 +14,9 @@ export default class MatrixResizeControlTopLeft extends MatrixResizeControl {
         this._absLeft = this.$item.offset().left;
         this._absTop = this.$item.offset().top
     }
-    _onMouseMove(evt){
-        var shiftY = evt.clientY - this._absTop;
-        var shiftX = evt.clientX - this._absLeft;
+    _onMouseMove(shift){
+        var shiftY = shift.top ? shift.top - this._absTop : 0;
+        var shiftX = shift.left ? shift.left - this._absLeft : 0;
 
         var edgeMatrixCoordY = (this.matrix.height - 1) * config.cell_size;
 

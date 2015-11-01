@@ -1,9 +1,10 @@
 import MatrixActions from './MatrixActions'
 
 export default class MatrixResizeControl {
-    constructor($item, matrix){
+    constructor($item, matrix, type){
         this.$item = $item;
         this.matrix = matrix;
+        this.type = type;
         this.rows = 0;
         this.cols = 0;
 
@@ -21,7 +22,22 @@ export default class MatrixResizeControl {
             $(document).on('mousemove.resize',evt=>{
                 evt.preventDefault();
 
-                this._onMouseMove(evt);
+                var shift = {top:0,left:0};
+
+                switch (this.type) {
+                    case 'horizontal':
+                        shift.left = evt.clientX;
+                        break;
+                    case 'vertical':
+                        shift.top = evt.clientY;
+                        break;
+                    case 'diagonal':
+                        shift.left = evt.clientX;
+                        shift.top = evt.clientY;
+                        break;
+                }
+                
+                this._onMouseMove(shift);
 
                 this._$table.addClass('add');
             });

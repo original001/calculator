@@ -1,5 +1,4 @@
-import MatrixResizeControlLeft from '../../public/components/matrix/MatrixResizeControlLeft.js'
-import MatrixResizeControlTop from '../../public/components/matrix/MatrixResizeControlTop.js'
+import MatrixResizeTrigger from '../../public/components/matrix/MatrixResizeTrigger.js'
 import config from '../../public/components/matrix/config'
 
 describe('should', ()=> {
@@ -10,7 +9,7 @@ describe('should', ()=> {
     beforeEach(()=>{
         matrix = jasmine.createSpyObj('matrix',['addRows','addCols','removeRows','removeCols','width']);
         matrix.width = 4;
-        resizer = new MatrixResizeControlLeft($('<div></div>'), matrix);
+        resizer = new MatrixResizeTrigger($('<div></div>'), matrix, 'horizontal');
         resizer._onMouseDown();
     });
 
@@ -20,21 +19,21 @@ describe('should', ()=> {
     });
 
     it('remove one column when the shift is equal to - half', ()=>{
-        resizer._onMouseMove({clientX: - config.cell_size/2});
+        resizer._onMouseMove({left: - config.cell_size/2});
         resizer._onMouseUp();
 
         expect(matrix.removeCols).toHaveBeenCalledWith(1)
     });
 
     it('remove one column when the shift is equal to -1', ()=>{
-        resizer._onMouseMove({clientX: - config.cell_size});
+        resizer._onMouseMove({left: - config.cell_size});
         resizer._onMouseUp();
 
         expect(matrix.removeCols).toHaveBeenCalledWith(1)
     });
 
     it('do nothing when the shift is equal to half of tollerance', ()=>{
-        resizer._onMouseMove({clientX: + config.resize_tollerance/2});
+        resizer._onMouseMove({left: + config.resize_tollerance/2});
         resizer._onMouseUp();
 
         expect(matrix.removeCols).not.toHaveBeenCalled();
@@ -42,35 +41,35 @@ describe('should', ()=> {
     });
 
     it('add one column when the shift is equal to + half', ()=>{
-        resizer._onMouseMove({clientX: + config.cell_size/2});
+        resizer._onMouseMove({left: + config.cell_size/2});
         resizer._onMouseUp();
 
         expect(matrix.addCols).toHaveBeenCalledWith(1)
     });
 
     it('add one column when the shift is equal to + 1', ()=>{
-        resizer._onMouseMove({clientX: + config.cell_size});
+        resizer._onMouseMove({left: + config.cell_size});
         resizer._onMouseUp();
 
         expect(matrix.addCols).toHaveBeenCalledWith(1)
     });
 
     it('add three column when the shift is equal to 2 + half', ()=>{
-        resizer._onMouseMove({clientX: + config.cell_size*5/2});
+        resizer._onMouseMove({left: + config.cell_size*5/2});
         resizer._onMouseUp();
 
         expect(matrix.addCols).toHaveBeenCalledWith(3)
     });
 
     it('remove three column when the shift is equal to - 2 + half', ()=>{
-        resizer._onMouseMove({clientX: - config.cell_size*5/2});
+        resizer._onMouseMove({left: - config.cell_size*5/2});
         resizer._onMouseUp();
 
         expect(matrix.removeCols).toHaveBeenCalledWith(3)
     });
 
     it('remove three column when the shift is equal to - 5 + half', ()=>{
-        resizer._onMouseMove({clientX: - config.cell_size*11/2});
+        resizer._onMouseMove({left: - config.cell_size*11/2});
         resizer._onMouseUp();
 
         expect(matrix.removeCols).toHaveBeenCalledWith(3)
@@ -86,7 +85,7 @@ describe('should', ()=> {
     beforeEach(()=>{
         matrix = jasmine.createSpyObj('matrix',['addRows','addCols','removeRows','removeCols','height']);
         matrix.height = 4;
-        resizer = new MatrixResizeControlTop($('<div></div>'), matrix);
+        resizer = new MatrixResizeTrigger($('<div></div>'), matrix, 'vertical');
         resizer._onMouseDown();
     });
 
@@ -96,21 +95,21 @@ describe('should', ()=> {
     });
 
     it('remove one column when the shift is equal to - half', ()=>{
-        resizer._onMouseMove({clientY: - config.cell_size/2});
+        resizer._onMouseMove({top: - config.cell_size/2});
         resizer._onMouseUp();
 
         expect(matrix.removeRows).toHaveBeenCalledWith(1)
     });
 
     it('remove one column when the shift is equal to -1', ()=>{
-        resizer._onMouseMove({clientY: - config.cell_size});
+        resizer._onMouseMove({top: - config.cell_size});
         resizer._onMouseUp();
 
         expect(matrix.removeRows).toHaveBeenCalledWith(1)
     });
 
     it('do nothing when the shift is equal to half of tollerance', ()=>{
-        resizer._onMouseMove({clientY: + config.resize_tollerance/2});
+        resizer._onMouseMove({top: + config.resize_tollerance/2});
         resizer._onMouseUp();
 
         expect(matrix.removeRows).not.toHaveBeenCalled();
@@ -118,35 +117,35 @@ describe('should', ()=> {
     });
 
     it('add one column when the shift is equal to + half', ()=>{
-        resizer._onMouseMove({clientY: + config.cell_size/2});
+        resizer._onMouseMove({top: + config.cell_size/2});
         resizer._onMouseUp();
 
         expect(matrix.addRows).toHaveBeenCalledWith(1)
     });
 
     it('add one column when the shift is equal to + 1', ()=>{
-        resizer._onMouseMove({clientY: + config.cell_size});
+        resizer._onMouseMove({top: + config.cell_size});
         resizer._onMouseUp();
 
         expect(matrix.addRows).toHaveBeenCalledWith(1)
     });
 
     it('add three column when the shift is equal to 2 + half', ()=>{
-        resizer._onMouseMove({clientY: + config.cell_size*5/2});
+        resizer._onMouseMove({top: + config.cell_size*5/2});
         resizer._onMouseUp();
 
         expect(matrix.addRows).toHaveBeenCalledWith(3)
     });
 
     it('remove three column when the shift is equal to - 2 + half', ()=>{
-        resizer._onMouseMove({clientY: - config.cell_size*5/2});
+        resizer._onMouseMove({top: - config.cell_size*5/2});
         resizer._onMouseUp();
 
         expect(matrix.removeRows).toHaveBeenCalledWith(3)
     });
 
     it('remove three column when the shift is equal to - 5 + half', ()=>{
-        resizer._onMouseMove({clientY: - config.cell_size*11/2});
+        resizer._onMouseMove({top: - config.cell_size*11/2});
         resizer._onMouseUp();
 
         expect(matrix.removeRows).toHaveBeenCalledWith(3)
