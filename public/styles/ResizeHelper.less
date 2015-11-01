@@ -1,0 +1,25 @@
+.resize-helper {
+  z-index: 0;
+  position: absolute;
+  > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &__bg {
+    z-index: 0;
+    background: #F8F8F8;
+  }
+  &__remove {
+    z-index: 2;
+    background: #FFE7E7;
+  }
+  &__add {
+    z-index: 1;
+    background: #E7FFE7;
+  }
+  &__cross {
+    z-index: 3;
+    background: #ffffff;
+  }
+}

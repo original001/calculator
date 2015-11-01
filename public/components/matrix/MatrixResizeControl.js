@@ -1,6 +1,5 @@
 import MatrixActions from './MatrixActions'
-
-import config from './config'
+import ResizeHelper from './ResizeHelper'
 
 export default class MatrixResizeControl {
     constructor(matrix, type){
@@ -16,6 +15,8 @@ export default class MatrixResizeControl {
             evt.preventDefault();
 
             this.onMouseDown();
+
+            this.resizeHelper = new ResizeHelper(this.matrix);
             
             this._$table = this.$item.closest('.table');
 
