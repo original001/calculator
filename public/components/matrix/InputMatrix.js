@@ -2,8 +2,6 @@ import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
 import MatrixResizeTrigger from './MatrixResizeTrigger'
 
-import config from './config';
-
 class InputMatrix extends Matrix {
     _attachEvents() {
         this.$inputs.on('keyup change', (evt)=> {

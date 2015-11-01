@@ -1,5 +1,4 @@
 import MatrixResizeControl from './MatrixResizeControl'
-import config from './config'
 
 export default class MatrixResizeTrigger extends MatrixResizeControl {
     onMouseDown(){

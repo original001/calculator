@@ -1,5 +1,6 @@
 import MatrixResizeTrigger from '../../public/components/matrix/MatrixResizeTrigger.js'
-import config from '../../public/components/matrix/config'
+
+import '../../public/components/matrix/config'
 
 describe('should', ()=> {
     var resizer;

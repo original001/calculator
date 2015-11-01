@@ -16,4 +16,4 @@ const config = {
     }
 };
 
-export default config
+global.config = config;
