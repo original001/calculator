@@ -48,6 +48,8 @@ export default class MatrixResizeControl {
             $(document).one('mouseup',()=>{
                 this.onMouseUp();
 
+                this.resizeHelper.destroy();
+
                 this._$table.removeClass('add');
 
                 $(document).off('mousemove.resize');

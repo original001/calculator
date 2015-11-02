@@ -16,8 +16,9 @@ export default class ResizeHelper {
     }
 
     _init() {
-        this._$bg
-            .add(this._$cross)
+        this._$cross
+            .add(this._$remove)
+            .add(this._$add)
             .css({
                 width: this.width * config.cell_size,
                 height: this.height * config.cell_size
@@ -32,6 +33,28 @@ export default class ResizeHelper {
     }
 
     show(colsToAdd, rowsToAdd) {
+        if (colsToAdd < 0) {
+            this._$cross
+                .add(this._$add)
+                .width((this.width + colsToAdd) * config.cell_size);
+        } else if (colsToAdd > 0) {
+            this._$add.width((this.width + colsToAdd) * config.cell_size)
+        } else {
+            this._$cross
+                .add(this._$add)
+                .width(this.width * config.cell_size)
+        }
 
+        if (rowsToAdd < 0) {
+            this._$cross
+                .add(this._$add)
+                .height((this.height + rowsToAdd) * config.cell_size);
+        } else if (rowsToAdd > 0) {
+            this._$add.height((this.height + rowsToAdd) * config.cell_size)
+        } else {
+            this._$cross
+                .add(this._$add)
+                .height(this.height * config.cell_size)
+        }
     }
 }
