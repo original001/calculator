@@ -1,4 +1,3 @@
-import MatrixActions from './MatrixActions'
 import ResizeHelper from './ResizeHelper'
 
 export default class MatrixResizeControl {
@@ -41,6 +40,8 @@ export default class MatrixResizeControl {
                 this.onMouseMove(shift);
 
                 this.resizeHelper.show(this.colsToAdd, this.rowsToAdd);
+
+                this.matrix.changeSize(this.colsToAdd, this.rowsToAdd);
 
                 this._$table.addClass('add');
             });

@@ -1,9 +1,12 @@
+import MatrixActions from './MatrixActions'
+
 export default class Matrix {
     constructor({width, height}) {
         this._width = width || 1;
         this._height = height || 1;
 
         this.$wrapper = $('<div class="wrapper-table" ></div>');
+        this.$matrixSize = $(`<div class="table__size" >${this._width} x ${this._height}</div>`);
 
         this._init();
         this._updateState();
@@ -24,6 +27,7 @@ export default class Matrix {
             this.$table.append($row).appendTo(this.$wrapper)
         }
         this.$wrapper
+            .append(this.$matrixSize)
             .append($bracketRight)
             .prepend($bracketLeft);
     }
@@ -101,6 +105,10 @@ export default class Matrix {
     validate() {
         var array = this._readFromTable();
         return _.every(array, row => _.every(row, cell => !isNaN(cell)))
+    }
+
+    changeSize(colsToAdd, rowsToAdd){
+        this.$matrixSize.text(`${this._width + colsToAdd} x ${this._height + rowsToAdd}`);
     }
 
     _readFromTable() {

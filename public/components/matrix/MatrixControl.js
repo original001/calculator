@@ -113,7 +113,7 @@ class MatrixControl {
             let resultArray = Calculation.run(matrixesAsArray, operatorsAsArray);
             this._showResult(resultArray);
         } catch (e) {
-            //todo: exception
+            alert(e);
         }
     }
 }
