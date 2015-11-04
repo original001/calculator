@@ -36,6 +36,7 @@ export default class Matrix {
         this.$rows = this.$table.find('.table__row');
         this.$inputs = this.$table.find('.table__cell-input');
         this._attachEvents();
+        MatrixActions.matrixValid();
         this._width = this.$rows.first().children().length;
         this._height = this.$rows.length
     }
