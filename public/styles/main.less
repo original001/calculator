@@ -81,6 +81,7 @@ a, .link {
   width: 200px;
   padding: 20px;
   position: fixed;
+  z-index: 9;
   top: 0;
   bottom: 0;
   left: 0;
@@ -251,7 +252,9 @@ a, .link {
 }
 
 .proccess-field {
-  margin-bottom: 40px;
+  padding-bottom: 40px;
+  display: table-cell;
+  white-space: nowrap;
 }
 
 .wrapper-table {
@@ -259,7 +262,7 @@ a, .link {
   z-index: 0;
   padding: 14px;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   margin-right: 20px;
 }
 
@@ -377,7 +380,7 @@ a, .link {
 .operator {
   position: relative; //*
   display: inline-block;
-  margin-top: 34px;
+  vertical-align: middle;
   width: 34px;
   padding: 5px 0;
   margin-right: 20px;
