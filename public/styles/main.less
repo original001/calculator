@@ -252,9 +252,22 @@ a, .link {
 }
 
 .proccess-field {
-  padding-bottom: 40px;
+  padding: 12px 0 40px;
   display: table-cell;
   white-space: nowrap;
+}
+
+.addButton {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  font-size: 36px;
+  color: @color-btn;
+  cursor: pointer;
+  transition: color .175s;
+  &:hover {
+    color: lighten(@color-btn, 10%);
+  }
 }
 
 .wrapper-table {
@@ -378,12 +391,13 @@ a, .link {
 }
 
 .operator {
-  position: relative; //*
+  position: relative;
   display: inline-block;
   vertical-align: middle;
   width: 34px;
   padding: 5px 0;
   margin-right: 20px;
+  cursor: pointer;
   &__symbol {
     width: 34px;
     height: 34px;

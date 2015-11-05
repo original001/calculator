@@ -1,7 +1,7 @@
 .*
 !.gitignore
 !.bowerrc
-www
+www/assets
 design
 node_modules
 test/coverage
