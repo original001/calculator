@@ -47,8 +47,12 @@
     }
   }
   &__caret {
+    transition: color .175s;
     color: @color-btn;
     font-size: 24px;
     text-align: center;
+  }
+  &:hover &__caret {
+    color: darken(@color-btn, 10%);
   }
 }

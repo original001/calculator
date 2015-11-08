@@ -42,20 +42,20 @@ li {
   margin-bottom: 5px;
 }
 
-a, .link {
+a {
   color: @color-link;
-  .dashed(@style: solid);
-  transition: color .175s;
-  &:hover {
-    color: lighten(@color-link, 5%);
-  }
+  text-decoration: none;
 }
 
 .link {
   display: inline;
   color: @color-link;
   cursor: pointer;
+  transition: color .175s;
   .dashed(@style: solid);
+  &:hover {
+    color: darken(@color-link, 5%);
+  }
   &_dashed {
     border-bottom-style: dashed;
   }
@@ -64,7 +64,7 @@ a, .link {
   }
 }
 
-.service-links {
+.b-sidebar-links {
   margin-bottom: 50px;
 }
 
@@ -78,6 +78,10 @@ a, .link {
   left: 0;
   background: #51504C;
   color: #fff;
+}
+
+.sidebar-link {
+  color: #ffffff;
 }
 
 .content {
@@ -169,7 +173,7 @@ a, .link {
   white-space: nowrap;
 }
 
-.addButton {
+.button-add {
   display: inline-block;
   vertical-align: middle;
   margin-left: 8px;
@@ -178,7 +182,7 @@ a, .link {
   cursor: pointer;
   transition: color .175s;
   &:hover {
-    color: lighten(@color-btn, 10%);
+    color: darken(@color-btn, 10%);
   }
 }
 
