@@ -1,5 +1,7 @@
 import MatrixActions from './MatrixActions'
 
+import './styles/Matrix.less'
+
 export default class Matrix {
     constructor({width, height}) {
         this._width = width || 1;

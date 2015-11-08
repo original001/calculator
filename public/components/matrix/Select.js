@@ -1,3 +1,5 @@
+import './styles/Select.less'
+
 export default class Select {
     constructor(options){
         this._$wrapper = options.$wrapper;

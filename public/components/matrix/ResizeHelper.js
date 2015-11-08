@@ -1,4 +1,4 @@
-import '../../styles/ResizeHelper.less'
+import './styles/ResizeHelper.less'
 
 export default class ResizeHelper {
     constructor({width, height, view}) {

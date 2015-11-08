@@ -1,0 +1,73 @@
+@import url('../../../styles/_less/variables.less');
+
+.wrapper-table {
+  position: relative;
+  z-index: 0;
+  padding: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.table {
+  position: relative;
+  display: table;
+  float: left;
+  border-collapse: collapse;
+  transition: box-shadow .3s;
+  &.add {
+    box-shadow: 0 2px 4px 0 rgba(134, 134, 134, 0.50);
+  }
+  &__size {
+    position: absolute;
+    width: 100%;
+    top: -10px;
+    left: 0;
+    font-size: 12px;
+    text-align: center;
+    color: #9A9A9A;
+  }
+  &__brackets-r,
+  &__brackets-l {
+    position: absolute;
+    z-index: 9;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    border: 4px solid #585858;
+  }
+  &__brackets-l {
+    left: 0;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-right: none;
+  }
+  &__brackets-r {
+    right: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+  }
+  &__row {
+    display: table-row;
+  }
+  &__cell {
+    display: table-cell;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    border: 1px solid @color-border;
+    &.error {
+      border-bottom: 2px solid @color-error;
+    }
+    &-input {
+      text-align: center;
+      font-size: 18px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: none;
+    }
+  }
+}

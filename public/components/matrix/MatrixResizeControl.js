@@ -1,8 +1,10 @@
 import ResizeHelper from './ResizeHelper'
 
+import './styles/MatrixResizeControl.less'
+
 export default class MatrixResizeControl {
     constructor(matrix, type){
-        this.$item = $(`<div class="table__resize_${type}" />`);
+        this.$item = $(`<div class="table-resize_${type}" />`);
         this.matrix = matrix;
         this.type = type;
 

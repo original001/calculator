@@ -1,0 +1,73 @@
+@import url('../../../styles/_less/variables.less');
+
+.caret(@side) {
+  .transfer(@gutter: 0,
+    @color: @color-bg) when (@side =left) {
+    top: 50%;
+    margin-top: -@caret-size - @gutter;
+    border-right-color: @color;
+  }
+  .transfer(@gutter: 0,
+    @color: @color-bg) when (@side =top) {
+    left: 50%;
+    margin-left: -@caret-size - @gutter;
+    border-bottom-color: @color;
+  }
+  .transfer(@gutter: 0,
+    @color: @color-bg) when (@side =right) {
+    top: 50%;
+    margin-top: -@caret-size - @gutter;
+    border-left-color: @color;
+  }
+  .transfer(@gutter: 0,
+    @color: @color-bg) when (@side =bottom) {
+    left: 20px;
+    margin-left: -@caret-size - @gutter;
+    border-top-color: @color;
+  }
+  &:after,
+  &:before {
+    position: absolute;
+    z-index: 100;
+    width: 0;
+    height: 0;
+      @{side}: -@caret-size;
+    content: '';
+    border: @caret-size solid transparent;
+    border-@{side}: none;
+    .transfer();
+  }
+  &:before {
+    @outer-caret-size: @caret-size + @popup-bd-widht;
+      @{side}: -@caret-size - @popup-bd-widht - 1;
+    border-width: @outer-caret-size;
+    .transfer(@popup-bd-widht,
+            @color-btn);
+  }
+}
+
+.popup,
+.popup-left-center {
+  position: relative;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: @popup-bd-widht solid @color-btn;
+  max-width: 150px;
+  background: @color-bg;
+  .caret(left);
+}
+
+.popup-top-center {
+  &:extend(.popup);
+  .caret(top);
+}
+
+.popup-right-center {
+  &:extend(.popup);
+  .caret(right);
+}
+
+.popup-bottom-center {
+  &:extend(.popup);
+  .caret(bottom);
+}

@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=1024"/>
     <title>Main page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="assets/app.css"/>
+    <script>
+      if (window.document) {
+        document.documentElement.className = '';
+        const div = document.createElement('div');
+        div.innerHTML = '<!--[if IE 8]>8<![endif]--><!--[if IE 9]>9<![endif]-->';
+        const ieVerison = parseInt(div.innerHTML, 10);
+
+        if (ieVerison) {
+          document.documentElement.className += ' ie' + ieVerison;
+        }
+      }
+    </script>
   </head>
   <body>
     <!--[if lt IE 8]>

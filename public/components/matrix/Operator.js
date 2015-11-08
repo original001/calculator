@@ -1,5 +1,7 @@
 import Select from './Select'
 
+import './styles/Operator.less'
+
 const OPERATORS = {
     '+':'sum',
     '-':'minus',

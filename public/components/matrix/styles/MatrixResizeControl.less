@@ -1,0 +1,48 @@
+.table-resize {
+  &_hor, &_vert, &_diag {
+    position: absolute;
+    z-index: 10;
+    width: 15px;
+    height: 15px;
+    margin-top: -8px;
+    margin-left: -7px;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-sizing: border-box;
+      width: 7px;
+      height: 7px;
+      margin: auto;
+      border-radius: 2px;
+      border: 2px solid #bababa;
+      background: #fff;
+      transition: width .1s, height .1s;
+    }
+    &:active:before {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  &_hor {
+    top: 50%;
+    left: 100%;
+    cursor: e-resize;
+    cursor: ew-resize;
+  }
+  &_vert {
+    top: 100%;
+    left: 50%;
+    cursor: s-resize;
+    cursor: ns-resize;
+  }
+  &_diag {
+    left: 100%;
+    top: 100%;
+    cursor: se-resize;
+    cursor: nwse-resize;
+  }
+}

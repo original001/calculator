@@ -4,7 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     context: path.resolve('public'),
-    entry: './entry',
+    entry: './components/entry',
     output: {
         path: path.resolve('www/assets/'),
         publicPath: '/www/assets',
