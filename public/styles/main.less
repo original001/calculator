@@ -1,6 +1,7 @@
 /*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 @import url('_less/base.less');
 @import url('_less/variables.less');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 
 html,
 body {
@@ -14,7 +15,6 @@ body {
   line-height: 1.42;
   color: @color-base;
   background: @color-body-bg;
-  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -23,7 +23,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h2 {
@@ -64,13 +64,9 @@ a {
   }
 }
 
-.b-sidebar-links {
-  margin-bottom: 50px;
-}
-
 .sidebar {
-  width: 200px;
-  padding: 20px;
+  width: 235px;
+  padding: 23px 30px;
   position: fixed;
   z-index: 9;
   top: 0;
@@ -78,29 +74,33 @@ a {
   left: 0;
   background: #51504C;
   color: #fff;
-}
-
-.sidebar-link {
-  color: #ffffff;
+  &__ul {
+    margin-bottom: 65px;
+  }
+  &__li {
+    margin-bottom: 9px;
+  }
+  &__a {
+    color: #ffffff;
+  }
 }
 
 .content {
-  margin-left: 200px;
-  padding: 20px;
+  margin-left: 235px;
+  padding: 23px 30px;
 }
 
 .button {
   background: @color-btn;
   display: inline-block;
-  padding: 0 34px;
-  font-size: 14px;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 300;
   text-transform: uppercase;
   color: #fff;
   border-radius: 20px;
-  line-height: 28px;
-  margin-right: 20px;
+  line-height: 32px;
   margin-bottom: 20px;
-  white-space: nowrap;
   cursor: pointer;
   transition: background .175s;
   &:hover, &:focus {
@@ -167,7 +167,7 @@ a {
   }
 }
 
-.proccess-field {
+.calc-field {
   padding: 12px 0 40px;
   display: table-cell;
   white-space: nowrap;
@@ -176,10 +176,10 @@ a {
 .button-add {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 8px;
   font-size: 36px;
   color: @color-btn;
   cursor: pointer;
+  margin-left: 8px;
   transition: color .175s;
   &:hover {
     color: darken(@color-btn, 10%);
