@@ -61,6 +61,19 @@ export default class Matrix {
         return this.$wrapper;
     }
 
+    static resizeInput($cell){
+        let text = $cell[0].value;
+        if (text.length >= 4){
+            if (text.length >= 6){
+                $cell.css('font-size', 10);
+            } else {
+                $cell.css('font-size', 14);
+            }
+        } else {
+            $cell.css('font-size', 18);
+        }
+    }
+
     addRows(rows){
         for (var i = 0; i < rows; i++) {
             var $row = $('<div class="table__row" />');

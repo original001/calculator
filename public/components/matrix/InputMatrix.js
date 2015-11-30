@@ -10,6 +10,9 @@ class InputMatrix extends Matrix {
                 return
             }
             var $target = $(evt.target);
+
+            Matrix.resizeInput($target);
+
             if(isNaN($target.val())){
                 MatrixActions.matrixError();
                 InputMatrix.showError($target);

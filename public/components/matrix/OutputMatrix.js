@@ -9,7 +9,8 @@ class OutputMatrix extends Matrix {
     set array(array){
         this.$rows.each((indRow, row)=>{
             $(row).find(this.$inputs).each((indInput, input)=>{
-                $(input).val(array[indRow][indInput])
+                $(input).val(array[indRow][indInput]);
+                Matrix.resizeInput($(input));
             })
         });
     }
