@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+*.idea
 
 # Runtime data
 pids
@@ -32,3 +33,6 @@ node_modules
 
 # folders
 static
+
+# tests
+test/coverage

@@ -49,6 +49,9 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+            components: '../../public/components'
+        },
         extensions: ['', '.js']
     }
 };
