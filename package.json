@@ -25,7 +25,8 @@
     "style-loader": "^0.12.4",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.6",
-    "webpack": "^1.12.2"
+    "webpack": "^1.12.2",
+    "reflux": "^0.3.0"
   },
   "devDependencies": {
     "istanbul-instrumenter-loader": "^0.1.3",
