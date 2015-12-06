@@ -1,7 +1,5 @@
 require('dotenv').load();
 var keystone = require('keystone');
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
 
 keystone.init({
 
@@ -67,6 +65,9 @@ keystone.set('nav', {
 keystone.start();
 
 if (process.env.NODE_ENV !== 'production') {
+
+    var webpack = require('webpack');
+    var WebpackDevServer = require('webpack-dev-server');
     var options = require('./webpack.config.js');
     var compiler = webpack(options);
     var webpackServer = new WebpackDevServer(compiler, {
