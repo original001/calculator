@@ -8,23 +8,11 @@ html
 		meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
 		title= title || 'Calculator'
-		link(rel="icon", href="favicon.png")
+		link(rel="icon", href="favicon.png", type="image/png")
 		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css")
 
 		link(rel="stylesheet", href="#{assetsPrefix}/app.css")
 		block css
-
-		script.
-			if (window.document) {
-				document.documentElement.className = '';
-				var div = document.createElement('div');
-				div.innerHTML = '<!--[if IE 8]>8<![endif]--><!--[if IE 9]>9<![endif]-->';
-				var ieVerison = parseInt(div.innerHTML, 10);
-
-				if (ieVerison) {
-					document.documentElement.className += ' ie' + ieVerison;
-				}
-			}
 
 		block head
 

@@ -78,9 +78,8 @@ class MatrixControl {
 
     _showResult(result) {
         /**
-         * @input result
-         * @description resulting matrix as array
-         * @type Array
+         * resulting matrix as array
+         * @param {Array} result
          */
         var height = result.length;
         var width = result[0].length;

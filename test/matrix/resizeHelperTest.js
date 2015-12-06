@@ -1,11 +1,11 @@
 import ResizeHelper from 'components/matrix/ResizeHelper'
 
-import '../../public/components/matrix/config'
+import 'components/matrix/config'
 
 describe('should show cross block', ()=> {
     var matrix;
     var resizeHelper;
-    var cellSize = config.cell_size;
+    const cellSize = config.cell_size;
 
     beforeEach(()=> {
         matrix = jasmine.createSpyObj('matrix', ['width', 'height', 'view']);
