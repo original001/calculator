@@ -1,0 +1,25 @@
+extends ../layouts/default
+
+block sidebar 
+	.sidebar
+		ul.sidebar__ul
+			li.sidebar__li
+				a(href="#").sidebar__a Калькулятор
+			li.sidebar__li
+				a(href="#").sidebar__a Матрицы
+			li.sidebar__li
+				a(href="#").sidebar__a Линуры
+
+		ul.sidebar__ul
+			li.sidebar__li
+				a(href="#").sidebar__a Написать отзыв
+
+block content
+	.content
+		h2 Матрицы
+		button#getResult.button Посчитать
+		#calcField.calc-field
+		.calc-field
+			.button-add#addButton
+				i.fa.fa-plus-circle
+		#resultField.result-field

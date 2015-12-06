@@ -1,0 +1,38 @@
+include ../mixins/flash-messages
+
+doctype html
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+		title= title || 'Calculator'
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css")
+
+		link(rel="stylesheet", href="#{assetsPrefix}/app.css")
+		block css
+
+		script.
+			if (window.document) {
+				document.documentElement.className = '';
+				var div = document.createElement('div');
+				div.innerHTML = '<!--[if IE 8]>8<![endif]--><!--[if IE 9]>9<![endif]-->';
+				var ieVerison = parseInt(div.innerHTML, 10);
+
+				if (ieVerison) {
+					document.documentElement.className += ' ie' + ieVerison;
+				}
+			}
+
+		block head
+
+	//- HTML BODY
+	body
+		block sidebar
+		block content
+
+		script(src="#{assetsPrefix}/app.js")
+		if assetsPrefix
+			script(src="http://localhost:8081/webpack-dev-server.js")
+		block js

@@ -1,0 +1,190 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+@import url('_less/base.less');
+@import url('_less/variables.less');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font: @font-size-base 'Open Sans', Arial, sans-serif;
+  font-weight: 400;
+  position: relative;
+  line-height: 1.42;
+  color: @color-base;
+  background: @color-body-bg;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+a {
+  color: @color-link;
+  text-decoration: none;
+}
+
+.link {
+  display: inline;
+  color: @color-link;
+  cursor: pointer;
+  transition: color .175s;
+  .dashed(@style: solid);
+  &:hover {
+    color: darken(@color-link, 5%);
+  }
+  &_dashed {
+    border-bottom-style: dashed;
+  }
+  &_dotted {
+    border-bottom-style: dotted;
+  }
+}
+
+.sidebar {
+  width: 235px;
+  padding: 23px 30px;
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #51504C;
+  color: #fff;
+  &__ul {
+    margin-bottom: 65px;
+  }
+  &__li {
+    margin-bottom: 9px;
+  }
+  &__a {
+    color: #ffffff;
+  }
+}
+
+.content {
+  margin-left: 235px;
+  padding: 23px 30px;
+}
+
+.button {
+  background: @color-btn;
+  display: inline-block;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 20px;
+  line-height: 32px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background .175s;
+  &:hover, &:focus {
+    background-color: darken(@color-btn, 10%);
+  }
+  &.disabled {
+    background: @color-btn-disabled;
+    cursor: default;
+  }
+}
+
+.input {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 28px;
+  margin-right: 20px;
+  transition: background .175s;
+  &__text {
+    padding: 0 10px;
+    background: none;
+  }
+
+  &__line {
+    position: relative;
+    border-bottom: 2px solid @color-btn;
+    .error > & {
+      @caret-size: 6px;
+      border-bottom-color: @color-error;
+      &:after,
+      &:before {
+        position: absolute;
+        z-index: 100;
+        content: '';
+        width: 0;
+        height: 0;
+        left: 16px;
+        top: -@caret-size + @popup-bd-widht + 1px;
+        border: @caret-size solid transparent;
+        border-top: none;
+        border-bottom-color: @color-info;
+      }
+      &:before {
+        @outer-caret-size: @caret-size + @popup-bd-widht;
+        top: -@caret-size;
+        left: 14px;
+        border-width: @outer-caret-size;
+        border-bottom-color: @color-error;
+      }
+    }
+  }
+  &__error {
+    position: absolute;
+    z-index: 500;
+    width: 100%;
+    top: 100%;
+    background: @color-info;
+    font-size: @font-size-small;
+    line-height: 1;
+    padding: 5px;
+    border: 1px solid @color-border;
+    border-top: none;
+  }
+}
+
+.calc-field {
+  padding: 12px 0 40px;
+  display: table-cell;
+  white-space: nowrap;
+}
+
+.button-add {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 36px;
+  color: @color-btn;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: color .175s;
+  &:hover {
+    color: darken(@color-btn, 10%);
+  }
+}
+
+//==================================
+@import url('_less/helper.less');

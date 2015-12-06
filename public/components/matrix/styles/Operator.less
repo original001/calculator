@@ -1,0 +1,59 @@
+@import url('../../../styles/_less/variables');
+
+.operator {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 34px;
+  padding: 5px 0;
+  margin-right: 22px;
+  cursor: pointer;
+  &__symbol {
+    width: 34px;
+    height: 34px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    &-icon {
+      display: inline-block;
+      vertical-align: middle;
+      background: 50% 50% no-repeat;
+      -webkit-background-size: 100%;
+      background-size: 100%;
+      &_sum {
+        width: 20px;
+        height: 20px;
+        background-image: url(../../../img/operator-plus-2x.png);
+        .ie8 & {
+          background-image: url(../../../img/operator-plus.png);
+        }
+      }
+      &_minus {
+        width: 20px;
+        height: 5px;
+        background-image: url(../../../img/operator-minus-2x.png);
+        .ie8 & {
+          background-image: url(../../../img/operator-minus.png);
+        }
+      }
+      &_multi {
+        width: 16px;
+        height: 16px;
+        background-image: url(../../../img/operator-multi-2x.png);
+        .ie8 & {
+          background-image: url(../../../img/operator-multi.png);
+        }
+      }
+    }
+  }
+  &__caret {
+    margin-top: -8px;
+    transition: color .175s;
+    color: @color-btn;
+    font-size: 24px;
+    text-align: center;
+  }
+  &:hover &__caret {
+    color: darken(@color-btn, 10%);
+  }
+}
