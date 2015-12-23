@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var publicPath = null;
 var plugins = [];
 var devtool = undefined;
 
@@ -12,7 +11,6 @@ if (process.env.NODE_ENV === 'production') {
 		new webpack.optimize.DedupePlugin()
 	);
 } else {
-	publicPath = '/static/';
 	plugins.push(
 		new webpack.NoErrorsPlugin()
 	);
@@ -24,7 +22,7 @@ module.exports = {
     entry: './components/entry',
     output: {
 		path: path.join(__dirname, 'static'),
-        publicPath: publicPath,
+        publicPath: '/static/',
         filename: "app.js"
     },
 
