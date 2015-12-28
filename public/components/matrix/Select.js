@@ -1,58 +1,81 @@
 import './styles/Select.less'
 
 export default class Select {
-    constructor(options){
-        this._$wrapper = options.$wrapper;
-        this._$bindItem = options.$element;
-        this._$selectWrapper = $('<div class="select"></div>');
-        this._$selectItem = $('<div class="select__item"></div>');
+    constructor({initial, list, size, orientation}){
+        this._initial = initial || 0;
+        this._list = list || [];
+        this._size = size || 16;
+        this.orientation = orientation || 'vertical';
 
-        this._itemsList = options.list || [];
+        this._$wrapper = $('<div class="select__wrapper"></div>');
+        this._init();
+        this._setInitialState();
+        this._attachEvents();
+    }
 
-        this._fill();
+    _init(){
+        this._$element = $('<div class="select__item"></div>');
+
+        this._$popup = $('<div class="select"></div>');
+
+        this._list.forEach((obj, ind) => {
+            let value = Object.keys(obj)[0];
+
+            this._$popup
+                .append($('<div class="select__item" data-value="'+ind+'"></div>').html(obj[value]));
+        });
+
+        this._$wrapper
+            .append(this._$element)
+            .append(this._$popup);
+    }
+
+    _setInitialState(){
+        this._setValue(this._initial);
     }
 
     _attachEvents(){
-        //todo: close on body clicked
+        var _this = this;
 
-        this._$selectWrapper.on('click',(evt)=>{
-            evt.stopPropagation()
+        $(document).click(evt => {
+            this._hide();
+        });
+
+        this._$element.click(evt => {
+            evt.stopPropagation();
+            this._open();
+        });
+
+        this._$popup.on('click', '.select__item', function() {
+            var ind = $(this).attr('data-value');
+            _this._setValue(ind)
         });
     }
-    _detachEvents() {
-        this._$selectWrapper.off('click');
-    }
-    create() {
-        var top = this._$bindItem.position().top;
-        this._$selectWrapper.css('top',top);
 
-        this._attachEvents();
-
-        return this._$selectWrapper
-            .appendTo(this._$wrapper)
-            .show()
-            .addClass('show');
+    _open(){
+        this._$popup
+            .addClass('show')
+            .show();
     }
 
-    destroy() {
-        this._$selectWrapper
-            .hide()
-            .remove();
-        this._detachEvents();
+    _hide(){
+        this._$popup.hide();
     }
 
-    _fill() {
-        this._itemsList.forEach(($elem)=>{
-            let $item = this._$selectItem
-                .clone()
-                .append($elem)
-                .on('click',(evt)=>{
-                    evt.stopPropagation();
-                    let value = $elem.data().value;
-                    this._$bindItem.trigger('change',[value]);
-                    this.destroy();
-                });
-            this._$selectWrapper.append($item);
-        });
+    _setValue(ind){
+        var value = this._list[parseInt(ind)];
+
+        this._value = Object.keys(value)[0];
+
+        this._$element.html(value[this._value]);
     }
+
+    get view() {
+        return this._$wrapper
+    }
+
+    get value() {
+        return this._value
+    }
+
 }
