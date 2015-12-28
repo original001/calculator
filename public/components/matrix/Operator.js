@@ -39,7 +39,7 @@ export default class Operator {
     }
 
     get function(){
-        return this._select.value;
+        return config.operators[this._select.value];
     }
 
     get view() {

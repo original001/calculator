@@ -18,16 +18,25 @@ export default class Select {
 
         this._$popup = $('<div class="select"></div>');
 
+        this._fillPopup();
+
+        this._$wrapper
+            .append(this._$element)
+            .append(this._$popup);
+    }
+
+    _fillPopup() {
+        this._$popup.empty();
+
+        var list = this._list.splice(this._initial, 1)[0];
+        this._list.unshift(list);
+
         this._list.forEach((obj, ind) => {
             let value = Object.keys(obj)[0];
 
             this._$popup
                 .append($('<div class="select__item" data-value="'+ind+'"></div>').html(obj[value]));
         });
-
-        this._$wrapper
-            .append(this._$element)
-            .append(this._$popup);
     }
 
     _setInitialState(){
@@ -54,12 +63,12 @@ export default class Select {
 
     _open(){
         this._$popup
-            .addClass('show')
-            .show();
+            .addClass('show');
     }
 
     _hide(){
-        this._$popup.hide();
+        this._$popup
+            .removeClass('show');
     }
 
     _setValue(ind){
@@ -68,6 +77,10 @@ export default class Select {
         this._value = Object.keys(value)[0];
 
         this._$element.html(value[this._value]);
+
+        this._initial = ind;
+
+        this._fillPopup();
     }
 
     get view() {
