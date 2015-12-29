@@ -37,7 +37,7 @@ class MatrixControl {
     }
 
     _addOperator() {
-        var newOperator = new Operator(config.default_operator);
+        var newOperator = new Operator();
         newOperator.view.appendTo(this._$calcField);
 
         this._operators.push(newOperator);

@@ -3,7 +3,6 @@ const config = {
     cell_size: 40,
     default_width: 4,
     default_height: 4,
-    default_operator: '+',
     operators: {
         '+':'sum',
         '-':'minus',

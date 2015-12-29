@@ -1,7 +1,7 @@
 import './styles/Select.less'
 
 export default class Select {
-    constructor({initial, list, size, orientation}){
+    constructor({initial, list, size, orientation}) {
         this._initial = initial || 0;
         this._list = list || [];
         this._size = size || 16;
@@ -13,7 +13,7 @@ export default class Select {
         this._attachEvents();
     }
 
-    _init(){
+    _init() {
         this._$element = $('<div class="select__item"></div>');
 
         this._$popup = $('<div class="select"></div>');
@@ -35,15 +35,15 @@ export default class Select {
             let value = Object.keys(obj)[0];
 
             this._$popup
-                .append($('<div class="select__item" data-value="'+ind+'"></div>').html(obj[value]));
+                .append($('<div class="select__item" data-value="' + ind + '"></div>').html(obj[value]));
         });
     }
 
-    _setInitialState(){
+    _setInitialState() {
         this._setValue(this._initial);
     }
 
-    _attachEvents(){
+    _attachEvents() {
         var _this = this;
 
         $(document).click(evt => {
@@ -55,23 +55,23 @@ export default class Select {
             this._open();
         });
 
-        this._$popup.on('click', '.select__item', function() {
+        this._$popup.on('click', '.select__item', function () {
             var ind = $(this).attr('data-value');
             _this._setValue(ind)
         });
     }
 
-    _open(){
+    _open() {
         this._$popup
             .addClass('show');
     }
 
-    _hide(){
+    _hide() {
         this._$popup
             .removeClass('show');
     }
 
-    _setValue(ind){
+    _setValue(ind) {
         var value = this._list[parseInt(ind)];
 
         this._value = Object.keys(value)[0];

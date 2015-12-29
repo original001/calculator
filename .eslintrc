@@ -2,7 +2,7 @@
   "extends": "airbnb",
   "parser": "babel-eslint",
   "ecmaFeatures": {
-    "jsx": true
+    "jsx": false
   },
   "env": {
     "browser": true,
@@ -18,7 +18,7 @@
     "linebreak-style": [1, "unix"],
     "quotes": [1, "single"],
     "no-irregular-whitespace": 0,
-    "indent": [1, 2, {
+    "indent": [1, 4, {
         "VariableDeclarator": {
           "var": 2,
           "let": 2,

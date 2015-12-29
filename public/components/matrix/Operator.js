@@ -7,7 +7,7 @@ import multiOperator from '../../img/operator-multi.png'
 import plusOperator from '../../img/operator-plus.png'
 
 export default class Operator {
-    constructor(symbol){
+    constructor() {
         this._$element = $('<div class="operator"></div>');
         this._$caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
 
@@ -15,7 +15,7 @@ export default class Operator {
         this._init();
     }
 
-    _createList(){
+    _createList() {
         var list = {
             '+': plusOperator,
             '*': multiOperator,
@@ -25,7 +25,7 @@ export default class Operator {
         this._list = [];
 
         for (let img in list) {
-            if (list.hasOwnProperty(img)) 
+            if (list.hasOwnProperty(img))
                 this._list.push({[img]: `<img src="${list[img]}"/>`});
         }
     }
@@ -38,7 +38,7 @@ export default class Operator {
             .append(this._$caret);
     }
 
-    get function(){
+    get function() {
         return config.operators[this._select.value];
     }
 
