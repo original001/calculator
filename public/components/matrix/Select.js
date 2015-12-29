@@ -52,7 +52,7 @@ export default class Select {
 
         this._$element.click(evt => {
             evt.stopPropagation();
-            this._open();
+            this.open();
         });
 
         this._$popup.on('click', '.select__item', function () {
@@ -61,7 +61,7 @@ export default class Select {
         });
     }
 
-    _open() {
+    open() {
         this._$popup
             .addClass('show');
     }

@@ -13,6 +13,14 @@ export default class Operator {
 
         this._createList();
         this._init();
+        this._attachEvents();
+    }
+
+    _attachEvents(){
+        this._$caret.click(evt => {
+            evt.stopPropagation();
+            this._select.open();
+        })
     }
 
     _createList() {
