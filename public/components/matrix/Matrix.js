@@ -1,7 +1,5 @@
 import MatrixActions from './MatrixActions'
 
-import Menu from './Menu'
-
 import './styles/Matrix.less'
 
 export default class Matrix {
@@ -19,7 +17,7 @@ export default class Matrix {
     _init() {
         var $bracketRight = $('<div class="table__brackets-r" />');
         var $bracketLeft = $('<div class="table__brackets-l" />');
-        var $menu = new Menu().view;
+
         this.$table = $('<div class="table" />');
         for (var i = 0; i < this._height; i++) {
             let $row = $('<div class="table__row" />');
@@ -32,7 +30,6 @@ export default class Matrix {
             this.$table.append($row).appendTo(this.$wrapper)
         }
         this.$wrapper
-            .append($menu)
             .append(this.$matrixSize)
             .append($bracketRight)
             .prepend($bracketLeft);

@@ -5,7 +5,7 @@ export default class Select {
         this._initial = initial || 0;
         this._list = list || [];
         this._size = size || 16;
-        this.orientation = orientation || 'vertical';
+        this._orientation = orientation || 'vertical';
 
         this._$wrapper = $('<div class="select__wrapper"></div>');
         this._init();
@@ -77,6 +77,8 @@ export default class Select {
         this._value = Object.keys(value)[0];
 
         this._$element.html(value[this._value]);
+        
+        this._$wrapper.trigger('change.select');
 
         this._initial = ind;
 
