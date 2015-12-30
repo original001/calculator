@@ -26,7 +26,7 @@ class InputMatrix extends Matrix {
                 return
             }
             InputMatrix.clearError($target);
-            this.validate() ? MatrixActions.matrixValid() : MatrixActions.matrixValid();
+            MatrixActions.matrixValid();
         });
 
     }
@@ -36,11 +36,13 @@ class InputMatrix extends Matrix {
 
         this._menu = new Menu();
 
+        this.$wrapper
+            .append(this._menu.view);
+
         this.$table
             .prepend(new MatrixResizeTrigger(this, config.resizerTypes.diagonal).$item)
             .prepend(new MatrixResizeTrigger(this, config.resizerTypes.vertical).$item)
             .prepend(new MatrixResizeTrigger(this, config.resizerTypes.horizontal).$item)
-            .append(this._menu.view);
     }
 
     _triggerAction(){
@@ -81,7 +83,9 @@ class InputMatrix extends Matrix {
     }
 
     clear(){
-        console.log('clear')
+        this.$inputs
+            .val('')
+            .trigger('change');
     }
 
 }

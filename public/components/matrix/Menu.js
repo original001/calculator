@@ -1,6 +1,6 @@
-import Select from './Select';
+import Dropdown from './Dropdown';
 
-import './Menu.less';
+import './styles/Menu.less';
 
 export default class Menu {
 	constructor() {
@@ -26,14 +26,14 @@ export default class Menu {
                 this._list.push({[className]: `<i class="fa ${list[className]}"/>`});
         }
 
-		this._select = new Select({list: this._list, orientation: 'horizontal', size: 28});
+		this._select = new Dropdown({list: this._list, orientation: 'horizontal', size: 28});
 
 		this._$element
 			.append(this._select.view);
 	}
 
 	_attachEvents() {
-		this._select.view.on('change.select', () => {
+		this._select.view.on('change.dropdown', () => {
 			this._value = this._select.value;
 			this._$element.trigger('change.menu');
 		});
