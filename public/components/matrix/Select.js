@@ -1,14 +1,14 @@
 import Dropdown from './Dropdown';
 
 export default class Select extends Dropdown {
-    _setValue(ind) {
-    	super._setValue(ind);
-    	
-        var value = this._list[parseInt(ind)];
+    _setValue(key) {
+    	super._setValue(key);
 
-        this._$element.html(value[this._value]);
+        var obj = _.find(this._list, {key}) ;
 
-        this._initial = ind;
+        this._$element.html(obj.value);
+
+        this._initial = key;
 
         this._fillPopup();
     }

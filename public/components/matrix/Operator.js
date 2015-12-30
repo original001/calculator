@@ -11,7 +11,6 @@ export default class Operator {
         this._$element = $('<div class="operator"></div>');
         this._$caret = $('<div class="operator__caret"><i class="fa fa-caret-down"></i></div>');
 
-        this._createList();
         this._init();
         this._attachEvents();
     }
@@ -23,23 +22,18 @@ export default class Operator {
         })
     }
 
-    _createList() {
-        var list = {
-            '+': plusOperator,
-            '*': multiOperator,
-            '-': minusOperator
-        };
-
-        this._list = [];
-
-        for (let img in list) {
-            if (list.hasOwnProperty(img))
-                this._list.push({[img]: `<img src="${list[img]}"/>`});
-        }
+    _wrapImg(base64){
+        return `<img src="${base64}"/>`
     }
 
     _init() {
-        this._select = new Select({list: this._list});
+        this._select = new Select({
+            list: {
+                '+': this._wrapImg(plusOperator),
+                '*': this._wrapImg(multiOperator),
+                '-': this._wrapImg(minusOperator)
+            }
+        });
 
         this._$element
             .append(this._select.view)

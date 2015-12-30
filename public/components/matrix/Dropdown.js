@@ -1,13 +1,30 @@
 import './styles/Dropdown.less'
 
 export default class Dropdown {
-    constructor({initial, list, size, orientation}) {
-        this._initial = initial || 0;
-        this._list = list || [];
+    constructor({initial, list, size}) {
+        /**
+         * list of dropdown items
+         * @param {Object} list
+         * @usage {key:value, key1:value1, etc.}
+         */
+
+        this._list = [];
+
+        _.forIn(list, (value, key) => {
+            this._list.push({key: key, value: value});
+        });
+
+        /**
+         * key of first element in dropdown && static element
+         * @param {string} initial
+         */
+
+        this._initial = initial != null ? initial : _.first(this._list)['key'];
+
         this._size = size || 16;
-        this._orientation = orientation || 'vertical';
 
         this._$wrapper = $('<div class="dropdown__wrapper"></div>');
+
         this._init();
         this._setInitialState();
         this._attachEvents();
@@ -16,41 +33,41 @@ export default class Dropdown {
     _init() {
         this._$element = $('<div class="dropdown__item"></div>');
 
+        this._$wrapper.append(this._$element);
+
         this._$popup = $('<div class="dropdown"></div>');
 
         this._fillPopup();
 
-        this._$wrapper
-            .append(this._$element)
-            .append(this._$popup);
+        $('body').append(this._$popup);
     }
 
     _fillPopup() {
         this._$popup.empty();
 
-        var list = this._list.splice(this._initial, 1)[0];
-        this._list.unshift(list);
+        let index = _.findIndex(this._list, {key: this._initial});
 
-        this._list.forEach((obj, ind) => {
-            let value = Object.keys(obj)[0];
+        let curValue = _.pullAt(this._list, index);
+        this._list = _.union(curValue, this._list);
 
+        this._list.forEach(obj => {
             this._$popup
-                .append($('<div class="dropdown__item" data-value="' + ind + '"></div>').html(obj[value]));
+                .append($('<div class="dropdown__item" data-key="' + obj.key + '"></div>').html(obj.value));
         });
     }
 
     _setInitialState() {
-        var value = this._list[parseInt(this._initial)];
+        var obj = _.find(this._list, {key: this._initial});
 
-        this._value = Object.keys(value)[0];
+        this._value = obj.key;
 
-        this._$element.html(value[this._value]);
+        this._$element.html(obj.value);
     }
 
     _attachEvents() {
         var _this = this;
 
-        $(document).click(evt => {
+        $(document).click(() => {
             this._hide();
         });
 
@@ -60,12 +77,22 @@ export default class Dropdown {
         });
 
         this._$popup.on('click', '.dropdown__item', function () {
-            var ind = $(this).attr('data-value');
-            _this._setValue(ind)
+            var key = $(this).attr('data-key');
+            _this._setValue(key)
         });
     }
 
     open() {
+        var left = this._$element.offset().left;
+        var top = this._$element.offset().top;
+        var width = this._$wrapper.width();
+
+        this._$popup.css({
+            left,
+            top,
+            width
+        });
+
         this._$popup
             .addClass('show');
     }
@@ -75,10 +102,8 @@ export default class Dropdown {
             .removeClass('show');
     }
 
-    _setValue(ind) {
-        var value = this._list[parseInt(ind)];
-
-        this._value = Object.keys(value)[0];
+    _setValue(key) {
+        this._value = key;
 
         this._$wrapper.trigger('change.dropdown');
     }

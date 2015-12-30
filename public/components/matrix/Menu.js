@@ -11,22 +11,16 @@ export default class Menu {
 	}
 
 	_init(){
-		var list = {
-			more: 'fa-ellipsis-h',
-			replace: 'fa-retweet',
-			equal: 'fa-share-square-o',
-			erase: 'fa-eraser',
-			trash: 'fa-trash-o'
-		};
-
-        this._list = [];
-
-        for (let className in list) {
-            if (list.hasOwnProperty(className))
-                this._list.push({[className]: `<i class="fa ${list[className]}"/>`});
-        }
-
-		this._select = new Dropdown({list: this._list, orientation: 'horizontal', size: 28});
+		this._select = new Dropdown({
+			list: {
+				more: '<i class="fa fa-ellipsis-h"/>',
+				replace: 'транспонировать',
+				equal: 'найти определитель',
+				erase: 'очистить',
+				trash: 'удалить'
+			}, 
+			initial:'more'
+		});
 
 		this._$element
 			.append(this._select.view);
