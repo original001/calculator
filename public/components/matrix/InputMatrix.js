@@ -76,7 +76,7 @@ class InputMatrix extends Matrix {
     }
 
     determinant(){
-        var det = Calculation.determinant(this._readFromTable(), this.width, this.height);
+        var det = Calculation.determinant(this.array);
         console.log(det);
     }
 
