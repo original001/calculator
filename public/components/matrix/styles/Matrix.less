@@ -15,6 +15,8 @@
   float: left;
   border-collapse: collapse;
   transition: box-shadow .3s;
+  border: 1px solid @color-border;
+  border-top: none;
   &.add {
     box-shadow: 0 2px 4px 0 rgba(134, 134, 134, 0.50);
   }
@@ -52,9 +54,14 @@
     display: table-row;
   }
   &__cell {
-    display: table-cell;
+    display: inline-block;
+    vertical-align: top;
     position: relative;
-    border: 1px solid @color-border;
+    border-left: 1px solid @color-border;
+    border-top: 1px solid @color-border;
+    &:first-child {
+      border-left: none;
+    }
     &.error {
       border-bottom: 2px solid @color-error;
     }

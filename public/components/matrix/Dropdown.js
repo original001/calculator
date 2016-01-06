@@ -77,7 +77,7 @@ export default class Dropdown {
     _attachEvents() {
         var _this = this;
 
-        $(document).click(() => {
+        $(document).on('click show.dropdown', () => {
             this._hide();
         });
 
@@ -101,6 +101,8 @@ export default class Dropdown {
             top,
             width: this._size
         });
+
+        $(document).trigger('show.dropdown');
 
         this._$popup
             .addClass('show');
