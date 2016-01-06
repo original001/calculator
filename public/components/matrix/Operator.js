@@ -32,7 +32,8 @@ export default class Operator {
                 '+': this._wrapImg(plusOperator),
                 '*': this._wrapImg(multiOperator),
                 '-': this._wrapImg(minusOperator)
-            }
+            },
+            size: 34
         });
 
         this._$element

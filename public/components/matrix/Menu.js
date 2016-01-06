@@ -1,4 +1,4 @@
-import Dropdown from './Dropdown';
+import DropdownMenu from './DropdownMenu';
 
 import './styles/Menu.less';
 
@@ -11,15 +11,13 @@ export default class Menu {
 	}
 
 	_init(){
-		this._select = new Dropdown({
+		this._select = new DropdownMenu({
 			list: {
-				more: '<i class="fa fa-ellipsis-h"/>',
 				replace: 'транспонировать',
 				equal: 'найти определитель',
 				erase: 'очистить',
 				trash: 'удалить'
-			}, 
-			initial:'more'
+			}
 		});
 
 		this._$element

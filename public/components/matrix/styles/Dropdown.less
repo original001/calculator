@@ -17,18 +17,35 @@
         opacity: 1;
         box-shadow: 0 2px 4px rgba(137, 137, 137, 0.50);
     }
-    &__wrapper {
-        position: relative;
-    }
     &__item {
-        margin: 0 -@select-padding;
-        padding: 9px 0;
-        text-align: center;
         cursor: pointer;
     }
     & &__item {
         &.active, &:focus, &:hover {
             background: #EEECEC;
         }
+    }
+}
+
+.dropdown-select:extend(.dropdown all) {
+    &__item {
+        margin: 0 -@select-padding;
+        padding: 9px 0;
+        text-align: center;
+    }
+}
+
+.dropdown-menu:extend(.dropdown all) {
+    padding-bottom: 12px;
+    &__item, &__icon {
+        margin: 0 -@select-padding;
+        padding: 5px 22px;
+        font-size: 15px;
+        text-align: left;
+    }
+    &__icon {
+        opacity: .5;
+        padding-bottom: 0;
+        margin-bottom: -3px;
     }
 }

@@ -19,24 +19,28 @@ export default class Dropdown {
          * @param {string} initial
          */
 
-        this._initial = initial != null ? initial : _.first(this._list)['key'];
+        this._initial = initial && list.hasOwnProperty(initial) ? initial : null;
 
-        this._size = size || 16;
+        /**
+         * popup width
+         * @param {number} size
+         */
 
-        this._$wrapper = $('<div class="dropdown__wrapper"></div>');
+        this._size = size || null;
+
+        this._$element = $(`<div class="dropdown${this.prefix}__item"></div>`);
+        this._$popup = $(`<div class="dropdown${this.prefix}"></div>`);
 
         this._init();
         this._setInitialState();
         this._attachEvents();
     }
 
+    get prefix(){
+        return '';
+    }
+
     _init() {
-        this._$element = $('<div class="dropdown__item"></div>');
-
-        this._$wrapper.append(this._$element);
-
-        this._$popup = $('<div class="dropdown"></div>');
-
         this._fillPopup();
 
         $('body').append(this._$popup);
@@ -45,23 +49,29 @@ export default class Dropdown {
     _fillPopup() {
         this._$popup.empty();
 
-        let index = _.findIndex(this._list, {key: this._initial});
+        if (this._initial != null) {
+            let index = _.findIndex(this._list, {key: this._initial});
 
-        let curValue = _.pullAt(this._list, index);
-        this._list = _.union(curValue, this._list);
+            let curValue = _.pullAt(this._list, index);
+            this._list = _.union(curValue, this._list);
+        }
 
-        this._list.forEach(obj => {
+        this._list.forEach(({key, value}) => {
             this._$popup
-                .append($('<div class="dropdown__item" data-key="' + obj.key + '"></div>').html(obj.value));
+                .append($(`<div class="dropdown${this.prefix}__item" data-key="${key}"/>`).html(value));
         });
     }
 
     _setInitialState() {
-        var obj = _.find(this._list, {key: this._initial});
+        if (this._initial == null) {
+            var {key, value} = _.first(this._list);
+        } else {
+            var {key, value} = _.find(this._list, {key: this._initial});
+        }
 
-        this._value = obj.key;
+        this._value = key;
 
-        this._$element.html(obj.value);
+        this._$element.html(value);
     }
 
     _attachEvents() {
@@ -76,7 +86,7 @@ export default class Dropdown {
             this.open();
         });
 
-        this._$popup.on('click', '.dropdown__item', function () {
+        this._$popup.on('click', `.dropdown${this.prefix}__item`, function () {
             var key = $(this).attr('data-key');
             _this._setValue(key)
         });
@@ -85,12 +95,11 @@ export default class Dropdown {
     open() {
         var left = this._$element.offset().left;
         var top = this._$element.offset().top;
-        var width = this._$wrapper.width();
 
         this._$popup.css({
             left,
             top,
-            width
+            width: this._size
         });
 
         this._$popup
@@ -105,11 +114,11 @@ export default class Dropdown {
     _setValue(key) {
         this._value = key;
 
-        this._$wrapper.trigger('change.dropdown');
+        this._$element.trigger('change.dropdown');
     }
 
     get view() {
-        return this._$wrapper
+        return this._$element
     }
 
     get value() {
