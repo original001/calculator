@@ -2,6 +2,7 @@ import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
 import MatrixResizeTrigger from './MatrixResizeTrigger'
 import Menu from './Menu'
+import Calculation from './Calculation'
 
 class InputMatrix extends Matrix {
     _attachEvents() {
@@ -75,7 +76,8 @@ class InputMatrix extends Matrix {
     }
 
     determinant(){
-        console.log('determinant') 
+        var det = Calculation.determinant(this._readFromTable(), this.width, this.height);
+        console.log(det);
     }
 
     remove(){
