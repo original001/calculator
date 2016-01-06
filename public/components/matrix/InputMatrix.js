@@ -1,16 +1,11 @@
 import Matrix from './Matrix'
 import MatrixActions from './MatrixActions'
 import MatrixResizeTrigger from './MatrixResizeTrigger'
-import Menu from './Menu'
-import Calculation from './Calculation'
+import DropdownMenu from './DropdownMenu';
 
 class InputMatrix extends Matrix {
     _attachEvents() {
         super._attachEvents();
-
-        this._menu.view.on('change.menu', ()=>{
-            this._triggerAction();
-        });
 
         this.$inputs.on('keyup change', (evt)=> {
             if (evt.keyCode === 13) {
@@ -29,16 +24,24 @@ class InputMatrix extends Matrix {
             InputMatrix.clearError($target);
             MatrixActions.matrixValid();
         });
-
     }
 
     _init(){
         super._init();
 
-        this._menu = new Menu();
+        this._select = new DropdownMenu({
+            list: {
+                trans: 'транспонировать',
+                inverse: 'найти обратную',
+                det: 'найти определитель',
+                rank: 'ранг матрицы',
+                clear: 'очистить',
+                remove: 'удалить',
+                random: 'заполнить числами'
+            }
+        });
 
-        this.$wrapper
-            .append(this._menu.view);
+        this.$menu.append(this._select.view)
 
         this.$table
             .prepend(new MatrixResizeTrigger(this, config.resizerTypes.diagonal).$item)
@@ -46,22 +49,6 @@ class InputMatrix extends Matrix {
             .prepend(new MatrixResizeTrigger(this, config.resizerTypes.horizontal).$item)
     }
 
-    _triggerAction(){
-        switch (this._menu.value) {
-            case 'replace':
-                this.transpanate();
-                break;
-            case 'equal':
-                this.determinant();
-                break;
-            case 'erase':
-                this.clear();
-                break;
-            case 'trash':
-                this.remove();
-                break;
-        }
-    }
 
     static showError($element) {
         $element.parent().addClass('error');
@@ -69,25 +56,6 @@ class InputMatrix extends Matrix {
 
     static clearError($element) {
         $element.parent().removeClass('error');
-    }
-
-    transpanate(){
-        console.log('transpanate');
-    }
-
-    determinant(){
-        var det = Calculation.determinant(this.array);
-        console.log(det);
-    }
-
-    remove(){
-        console.log('remove')
-    }
-
-    clear(){
-        this.$inputs
-            .val('')
-            .trigger('change');
     }
 
 }

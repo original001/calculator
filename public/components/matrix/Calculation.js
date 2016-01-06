@@ -166,8 +166,11 @@ class Calculation {
 		var m = A.length,
 			n = A[0].length;
 
-		if (n !== m || Calculation.determinant(A) === 0) 
-			throw new Error('Для неквадратных и вырожденных (определитель равен нулю) матриц обратных матриц не существует');
+		if (n !== m) 
+			throw new Error('Для неквадратных матриц обратных матриц не существует');
+		
+		if (Calculation.determinant(A) === 0)
+			throw new Error('Для вырожденных (определитель равен нулю) матриц обратных матриц не существует');
 
 		var det = Calculation.determinant(A);
 		if (det == 0) return false;
@@ -192,6 +195,37 @@ class Calculation {
 			for (var j = 0; j < m; j++) AT[i][j] = A[j][i];
 		}
 		return AT;
+	}
+
+	static pow(A, n) {
+		if (n == 1) return A;
+		else return multi( A, pow(n-1,A) );
+	}
+
+	static multiNumber(A, a){
+		/**
+		 * Умножение матрицы на число
+		 */
+
+		var m = A.length,
+			n = A[0].length,
+			B = [];
+		for (var i = 0; i < m; i++) {
+			B[i] = [];
+			for (var j = 0; j < n; j++) B[i][j] = a * A[i][j];
+		}
+		return B;
+	}
+
+	static random(A) {
+		var m = A.length,
+			n = A[0].length,
+			AR = [];
+		for (var i = 0; i < n; i++) {
+			AR[i] = [];
+			for (var j = 0; j < m; j++) AR[i][j] = _.random(-100, 100, true);
+		}
+		return AR;
 	}
 }
 

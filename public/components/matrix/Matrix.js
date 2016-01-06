@@ -1,4 +1,5 @@
 import MatrixActions from './MatrixActions'
+import Calculation from './Calculation'
 
 import './styles/Matrix.less'
 
@@ -18,6 +19,9 @@ export default class Matrix {
         var $bracketRight = $('<div class="table__brackets-r" />');
         var $bracketLeft = $('<div class="table__brackets-l" />');
 
+
+        this.$menu = $(`<div class="table-menu"></div>`);
+
         this.$table = $('<div class="table" />');
         for (var i = 0; i < this._height; i++) {
             let $row = $('<div class="table__row" />');
@@ -32,6 +36,7 @@ export default class Matrix {
         this.$wrapper
             .append(this.$matrixSize)
             .append($bracketRight)
+            .append(this.$menu)
             .prepend($bracketLeft);
     }
 
@@ -44,7 +49,13 @@ export default class Matrix {
         this._height = this.$rows.length
     }
 
-    _attachEvents() {}
+    _attachEvents() {
+        this.$menu.on('change.dropdown', ()=>{
+            var value = this._select.value
+            if (this.__proto__[value])
+                this[value]();
+        });
+    }
 
     get width(){
         return this._width;
@@ -56,6 +67,16 @@ export default class Matrix {
 
     get array() {
         return this._readFromTable()
+    }
+
+    set array(array){
+        this.$rows.each((indRow, row)=>{
+            $(row).find(this.$inputs).each((indInput, input)=>{
+                var value = _.round(array[indRow][indInput], config.PRECISION);
+                $(input).val(value);
+                Matrix.resizeInput($(input));
+            })
+        });
     }
 
     get view() {
@@ -127,6 +148,39 @@ export default class Matrix {
     changeSize(colsToAdd, rowsToAdd){
         this.$matrixSize.text(`${this._width + colsToAdd} x ${this._height + rowsToAdd}`);
     }
+
+    trans(){
+        console.log('transpanate');
+    }
+
+    det(){
+        var det = Calculation.determinant(this.array);
+        console.log(det);
+    }
+
+    rank(){
+        var rank = Calculation.rank(this.array);
+        console.log(rank);
+    }
+
+    remove(){
+        console.log('remove')
+    }
+
+    clear(){
+        this.$inputs
+            .val('')
+            .trigger('change');
+    }
+
+    inverse(){
+        this.array = Calculation.inverse(this.array);
+    }
+
+    random() {
+        this.array = Calculation.random(this.array);
+    }
+
 
     _readFromTable() {
         var array = [];

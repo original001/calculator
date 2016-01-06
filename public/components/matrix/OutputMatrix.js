@@ -1,4 +1,5 @@
 import Matrix from './Matrix'
+import DropdownMenu from "./DropdownMenu"
 
 class OutputMatrix extends Matrix {
     constructor(options){
@@ -6,13 +7,19 @@ class OutputMatrix extends Matrix {
         this.array = options.array || []
     }
 
-    set array(array){
-        this.$rows.each((indRow, row)=>{
-            $(row).find(this.$inputs).each((indInput, input)=>{
-                $(input).val(array[indRow][indInput]);
-                Matrix.resizeInput($(input));
-            })
+    _init(){
+        super._init();
+
+        this._select = new DropdownMenu({
+            list: {
+                trans: 'транспонировать',
+                inverse: 'найти обратную',
+                rank: 'ранг матрицы',
+                det: 'найти определитель',
+            }
         });
+
+        this.$menu.append(this._select.view)
     }
 }
 

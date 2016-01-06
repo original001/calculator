@@ -12,7 +12,8 @@ const config = {
         horizontal: 'hor',
         vertical: 'vert',
         diagonal: 'diag'
-    }
+    },
+    PRECISION: 3
 };
 
 global.config = config;
