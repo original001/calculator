@@ -197,15 +197,26 @@ class Calculation {
 		return AT;
 	}
 
-	static pow(A, n) {
+	static pow(A, pow) {
+		var n = pow != null ? Number(pow) : NaN;
+		if (isNaN(n)) 
+			throw new Error('Необходимо ввести число');
+		if (n % 1 !== 0 || n < 1) 
+			throw new Error('Число должно быть натуральным');
+
 		if (n == 1) return A;
-		else return multi( A, pow(n-1,A) );
+		else return Calculation.multi(A, Calculation.pow(A, n-1));
 	}
 
-	static multiNumber(A, a){
+	static multiNumber(A, number){
 		/**
 		 * Умножение матрицы на число
 		 */
+
+		var a = number != null ? Number(number) : NaN;
+
+		if (isNaN(a)) 
+			throw new Error('Необходимо ввести число');
 
 		var m = A.length,
 			n = A[0].length,
@@ -217,9 +228,9 @@ class Calculation {
 		return B;
 	}
 
-	static random(A) {
-		var m = A.length,
-			n = A[0].length,
+	static random(width, height) {
+		var m = width,
+			n = height,
 			AR = [];
 		for (var i = 0; i < n; i++) {
 			AR[i] = [];

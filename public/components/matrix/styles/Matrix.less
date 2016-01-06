@@ -16,7 +16,7 @@
   border-collapse: collapse;
   transition: box-shadow .3s;
   border: 1px solid @color-border;
-  border-top: none;
+  border-bottom: none;
   &.add {
     box-shadow: 0 2px 4px 0 rgba(134, 134, 134, 0.50);
   }
@@ -55,10 +55,11 @@
   }
   &__cell {
     display: inline-block;
+    height: 40px;
     vertical-align: top;
     position: relative;
     border-left: 1px solid @color-border;
-    border-top: 1px solid @color-border;
+    border-bottom: 1px solid @color-border;
     &:first-child {
       border-left: none;
     }
@@ -78,8 +79,8 @@
 .table-menu {
     position: absolute;
     z-index: 10;
-    right: 11px;
-    top: -12px;
+    right: 12px;
+    top: -13px;
     width: 38px;
     height: 23px;
     line-height: 1;

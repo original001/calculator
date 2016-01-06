@@ -13,6 +13,8 @@ class OutputMatrix extends Matrix {
         this._select = new DropdownMenu({
             list: {
                 trans: 'транспонировать',
+                multiNumber: 'умножить на число',
+                pow: 'возвести в степень',
                 inverse: 'найти обратную',
                 rank: 'ранг матрицы',
                 det: 'найти определитель',

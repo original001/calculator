@@ -32,6 +32,8 @@ class InputMatrix extends Matrix {
         this._select = new DropdownMenu({
             list: {
                 trans: 'транспонировать',
+                multiNumber: 'умножить на число',
+                pow: 'возвести в степень',
                 inverse: 'найти обратную',
                 det: 'найти определитель',
                 rank: 'ранг матрицы',

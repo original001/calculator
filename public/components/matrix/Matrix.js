@@ -51,7 +51,7 @@ export default class Matrix {
 
     _attachEvents() {
         this.$menu.on('change.dropdown', ()=>{
-            var value = this._select.value
+            var value = this._select.value;
             if (this.__proto__[value])
                 this[value]();
         });
@@ -73,7 +73,9 @@ export default class Matrix {
         this.$rows.each((indRow, row)=>{
             $(row).find(this.$inputs).each((indInput, input)=>{
                 var value = _.round(array[indRow][indInput], config.PRECISION);
-                $(input).val(value);
+                $(input)
+                    .val(value)
+                    .trigger('change');
                 Matrix.resizeInput($(input));
             })
         });
@@ -141,8 +143,13 @@ export default class Matrix {
     }
 
     validate() {
-        var array = this._readFromTable();
-        return _.every(array, row => _.every(row, cell => !isNaN(cell)))
+        try {
+            this._readFromTable();
+        } catch (e) {
+            return false
+        }
+
+        return true
     }
 
     changeSize(colsToAdd, rowsToAdd){
@@ -178,16 +185,25 @@ export default class Matrix {
     }
 
     random() {
-        this.array = Calculation.random(this.array);
+        this.array = Calculation.random(this.width, this.height);
     }
 
+    pow() {
+        this.array = Calculation.pow(this.array, prompt('Введите натуральное число', 1));
+    }
+
+    multiNumber() {
+        this.array = Calculation.multiNumber(this.array, prompt('Введите число', 1));
+    }
 
     _readFromTable() {
         var array = [];
         this.$rows.each((ind, row)=> {
             let subArray = [];
             $(row).find(this.$inputs).each((ind, input)=> {
-                subArray.push($(input).val())
+                var value = Number($(input).val());
+                if (isNaN(value)) throw new Error('Сначала исправьте все ошибки'); 
+                subArray.push(value);
             });
             array.push(subArray)
         });
