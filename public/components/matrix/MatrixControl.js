@@ -3,6 +3,7 @@ import Operator from './Operator'
 import MatrixActions from './MatrixActions'
 import InputMatrix from './InputMatrix'
 import OutputMatrix from './OutputMatrix'
+import ErrorControl from './Error'
 
 class MatrixControl {
     constructor() {
@@ -20,6 +21,7 @@ class MatrixControl {
 
     init() {
         this._addMatrix();
+        this._error = new ErrorControl;
     }
 
     _attachEvents() {
@@ -68,8 +70,15 @@ class MatrixControl {
             },
             onCalculate(){
                 if (!this._disabled) _this._calculate()
+            },
+            onError(message){
+                _this._showError(message);
             }
         })
+    }
+
+    _showError(message){
+        this._error.throw(message);
     }
 
     _validateMatrixes(){
@@ -108,7 +117,7 @@ class MatrixControl {
             let resultArray = Calculation.run(matrixesAsArray, operatorsAsArray);
             this._showResult(resultArray);
         } catch (e) {
-            alert(e);
+            MatrixActions.error(e.message);
         }
     }
 }

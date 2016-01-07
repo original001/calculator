@@ -9,7 +9,7 @@ class Calculation {
 		var newArray = [];
 
 		if (B.length !== A.length || B[0].length !== A[0].length) {
-			throw new Error('Массивы разной величины');
+			throw new Error('Матрицы должны иметь один и тот же размер');
 		} 
 
 		for (var i = 0; i < B.length; i++) {
@@ -45,8 +45,9 @@ class Calculation {
 
 	static minus(A, B){
 		var newArray = [];
+		
 		if (B.length !== A.length || B[0].length !== A[0].length) {
-			throw new Error('Массивы разной величины');
+			throw new Error('Матрицы должны иметь один и тот же размер');
 		} 
 
 		for (var i = 0; i < B.length; i++) {
@@ -168,12 +169,12 @@ class Calculation {
 
 		if (n !== m) 
 			throw new Error('Для неквадратных матриц обратных матриц не существует');
-		
-		if (Calculation.determinant(A) === 0)
-			throw new Error('Для вырожденных (определитель равен нулю) матриц обратных матриц не существует');
 
 		var det = Calculation.determinant(A);
-		if (det == 0) return false;
+		
+		if (det == 0)
+			throw new Error('Для вырожденных (определитель равен нулю) матриц обратных матриц не существует');
+
 		var N = A.length,
 			A = Calculation.adjugate(A);
 		for (var i = 0; i < N; i++) {

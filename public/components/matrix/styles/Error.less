@@ -1,0 +1,54 @@
+@margin: 11px;
+.error-notify {
+	position: relative;
+	margin-left: 235px + @margin;
+	margin-right: @margin;
+	padding: 10px 40px;
+	min-height: 40px;
+	line-height: 20px;
+	border-radius: 10px;
+	font-size: 14px;
+	background: #CE4C4C;
+	color: #FFFFFF;
+	text-align: center;
+	&__wrapper {
+		position: fixed;
+		z-index: 1000;
+		visibility: hidden;
+		opacity: 0;
+		left: 0;
+		right: 0;
+		top: -100px;
+		transition: all .5s linear;
+		&.show {
+			top: @margin;
+			opacity: 1;
+			visibility: visible;
+			transition: opacity .5s, top .5s, visibility 0s;
+		}
+	}
+	&__icon_warning, &__icon_close {
+		position: absolute;
+		margin: auto;
+		height: 18px;
+		top: 0;
+		bottom: 0;
+		line-height: 1;
+		font-size: 16px;
+	}
+	&__icon_warning {
+		left: 13px;
+	}
+	&__icon_close {
+		box-sizing: content-box;
+		padding: 10px;
+		right: 3px;
+		cursor: pointer;
+	}
+	&__text {
+		display: inline-block;
+		width: 100%;
+		vertical-align: middle;
+		line-height: 1.42
+	}
+}

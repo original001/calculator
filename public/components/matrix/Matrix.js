@@ -53,7 +53,11 @@ export default class Matrix {
         this.$menu.on('change.dropdown', ()=>{
             var value = this._select.value;
             if (this.__proto__[value])
-                this[value]();
+                try {
+                    this[value]();
+                } catch (e) {
+                    MatrixActions.error(e.message);
+                }
         });
     }
 
