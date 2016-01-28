@@ -9,7 +9,7 @@ class Calculation {
 		var newArray = [];
 
 		if (B.length !== A.length || B[0].length !== A[0].length) {
-			throw new Error('Матрицы должны иметь один и тот же размер');
+			throw new Error('The matrices must have the same size');
 		} 
 
 		for (var i = 0; i < B.length; i++) {
@@ -27,7 +27,7 @@ class Calculation {
 		var rowFirstMatrix = A[0];
 		var rowSecondMatrix = B[0];
 		if (rowFirstMatrix.length !== B.length) {
-			throw new Error('Форма матриц не согласована');
+			throw new Error('The matrix size is not agreed');
 		} 		
 
 		for (var i = 0; i < A.length; i++) {
@@ -47,7 +47,7 @@ class Calculation {
 		var newArray = [];
 		
 		if (B.length !== A.length || B[0].length !== A[0].length) {
-			throw new Error('Матрицы должны иметь один и тот же размер');
+			throw new Error('The matrices must have the same size');
 		} 
 
 		for (var i = 0; i < B.length; i++) {
@@ -168,12 +168,12 @@ class Calculation {
 			n = A[0].length;
 
 		if (n !== m) 
-			throw new Error('Для неквадратных матриц обратных матриц не существует');
+			throw new Error('For non-square matrix inverse matrix does not exist');
 
 		var det = Calculation.determinant(A);
 		
 		if (det == 0)
-			throw new Error('Для вырожденных (определитель равен нулю) матриц обратных матриц не существует');
+			throw new Error('For degenerate (the determinant is equal to zero) the matrix inverse matrix does not exist');
 
 		var N = A.length,
 			A = Calculation.adjugate(A);
@@ -201,9 +201,9 @@ class Calculation {
 	static pow(A, pow) {
 		var n = pow != null ? Number(pow) : NaN;
 		if (isNaN(n)) 
-			throw new Error('Необходимо ввести число');
+			throw new Error('You must enter a number');
 		if (n % 1 !== 0 || n < 1) 
-			throw new Error('Число должно быть натуральным');
+			throw new Error('The number must be natural');
 
 		if (n == 1) return A;
 		else return Calculation.multi(A, Calculation.pow(A, n-1));
@@ -217,7 +217,7 @@ class Calculation {
 		var a = number != null ? Number(number) : NaN;
 
 		if (isNaN(a)) 
-			throw new Error('Необходимо ввести число');
+			throw new Error('You must enter a number');
 
 		var m = A.length,
 			n = A[0].length,
