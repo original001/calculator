@@ -166,12 +166,12 @@ export default class Matrix {
 
     det(){
         var det = Calculation.determinant(this.array);
-        console.log(det);
+        alert(det);
     }
 
     rank(){
         var rank = Calculation.rank(this.array);
-        console.log(rank);
+        alert(rank);
     }
 
     remove(){
@@ -193,11 +193,11 @@ export default class Matrix {
     }
 
     pow() {
-        this.array = Calculation.pow(this.array, prompt('Введите натуральное число', 1));
+        this.array = Calculation.pow(this.array, prompt('Enter a positive integer', 1));
     }
 
     multiNumber() {
-        this.array = Calculation.multiNumber(this.array, prompt('Введите число', 1));
+        this.array = Calculation.multiNumber(this.array, prompt('Enter a number', 1));
     }
 
     _readFromTable() {
@@ -206,7 +206,7 @@ export default class Matrix {
             let subArray = [];
             $(row).find(this.$inputs).each((ind, input)=> {
                 var value = Number($(input).val());
-                if (isNaN(value)) throw new Error('Сначала исправьте все ошибки'); 
+                if (isNaN(value)) throw new Error('First correct all errors'); 
                 subArray.push(value);
             });
             array.push(subArray)

@@ -9,6 +9,7 @@ class Error {
 		this._$warningIcon = $('<div class="error-notify__icon_warning"><i class="fa fa-exclamation-circle" /></div>');
 		this._$closeIcon = $('<div class="error-notify__icon_close"><i class="fa fa-times" /></div>');
 		this._$text = $('<div class="error-notify__text" />')
+		this._isShown = false;
 
 		this._init();
 		this._attachEvents();
@@ -31,18 +32,36 @@ class Error {
 
 	throw(message){
 		this._$text.html(message);
+		if (this._isShown) {
+			this._highlight();
+			return;
+		}
 		this._close();
 		this._open();
 	}
 
 	_open(){
 		this._$wrapper.addClass('show');
+		this._isShown = true;
 		this._timer = setTimeout(this._close.bind(this), CLOSING_DELAY);
 	}
 
 	_close(){
 		this._$wrapper.removeClass('show');
+		this._isShown = false;
 		clearTimeout(this._timer);
+	}
+
+	_highlight(){
+		this._$element.one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+			$(this).removeClass('highlight');
+		});
+
+		this._$element
+			.addClass('highlight');
+
+		clearTimeout(this._timer);
+		this._timer = setTimeout(this._close.bind(this), CLOSING_DELAY);
 	}
 }
 

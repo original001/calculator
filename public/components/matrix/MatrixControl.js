@@ -111,9 +111,9 @@ class MatrixControl {
     }
 
     _calculate() {
-        var matrixesAsArray = this._matrixes.map(matrix => matrix.array);
-        var operatorsAsArray = this._operators.map(operator => operator.function);
         try {
+            var matrixesAsArray = this._matrixes.map(matrix => matrix.array);
+            var operatorsAsArray = this._operators.map(operator => operator.function);
             let resultArray = Calculation.run(matrixesAsArray, operatorsAsArray);
             this._showResult(resultArray);
         } catch (e) {

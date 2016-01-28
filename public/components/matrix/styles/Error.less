@@ -1,4 +1,5 @@
 @margin: 11px;
+@error-color: #CE4C4C;
 .error-notify {
 	position: relative;
 	margin-left: 235px + @margin;
@@ -8,9 +9,13 @@
 	line-height: 20px;
 	border-radius: 10px;
 	font-size: 14px;
-	background: #CE4C4C;
+	background: @error-color;
 	color: #FFFFFF;
 	text-align: center;
+	transition: background .5s;
+	&.highlight {
+		background: lighten(@error-color, 15%);
+	}
 	&__wrapper {
 		position: fixed;
 		z-index: 1000;

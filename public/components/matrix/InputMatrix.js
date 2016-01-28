@@ -31,15 +31,16 @@ class InputMatrix extends Matrix {
 
         this._select = new DropdownMenu({
             list: {
-                trans: 'транспонировать',
-                multiNumber: 'умножить на число',
-                pow: 'возвести в степень',
-                inverse: 'найти обратную',
-                det: 'найти определитель',
-                rank: 'ранг матрицы',
-                clear: 'очистить',
-                remove: 'удалить',
-                random: 'заполнить числами'
+                // trans: 'transpose',
+                multiNumber: 'multiplied by...',
+                pow: 'degree of...',
+                inverse: 'get inverse',
+                det: 'get determinant',
+                rank: 'get rank',
+                
+                clear: 'clear matrix',
+                // remove: 'remove',
+                random: 'fill by numbers'
             }
         });
 
